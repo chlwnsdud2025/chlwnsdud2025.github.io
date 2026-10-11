@@ -1,0 +1,74 @@
+/* Requested refinements. Original section order, profile and project carousel stay in portfolio.css. */
+.hero-video-frame video,.project-video-frame video{filter:none}
+.hero-video-frame video{object-fit:contain;background:#061a22}
+.hero-video-frame{border-radius:12px}
+.hero-showcase{scale:1.08;transform-origin:center}
+@media(min-width:781px){.hero-showcase{width:calc(100% + 40px);margin-left:-40px}}
+@media(min-width:781px) and (max-width:1050px){.hero-showcase{width:calc(100% + 26px);margin-left:-26px}}
+.trailer-label{position:absolute;z-index:3;left:18px;top:18px;display:inline-flex;align-items:center;gap:7px;padding:6px 10px;background:rgba(3,19,25,.75);border:1px solid rgba(255,255,255,.15);border-radius:2px;color:#e0eee7;font-size:8px;font-weight:700;letter-spacing:1.1px;backdrop-filter:blur(8px);pointer-events:none}
+.trailer-label>span{height:5px;width:5px;border-radius:50%;background:var(--green)}
+.video-caption{display:block}.video-caption>span{display:flex;gap:10px;align-items:center}.video-caption b{color:var(--green);font-weight:400}.video-caption:hover h2{color:var(--lime)}
+.hero-video-controls button:focus-visible,.small-arrows button:focus-visible,.carousel-arrow:focus-visible,.project-dot:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+.project-video-frame video{object-fit:contain;background:#061a22}
+.project-video-frame:after{background:linear-gradient(180deg,rgba(3,19,25,.08),transparent 30%,transparent 50%,rgba(3,19,25,.9))}
+.project-information{color:inherit;text-decoration:none}.project-information:hover h3{color:#d9f3c3}.project-information:focus-visible{outline:2px solid var(--lime);outline-offset:-4px}
+.project-media:focus-visible{outline:2px solid var(--lime);outline-offset:-4px;z-index:2}
+.project-details-block h4>span{transition:transform .2s}.project-information:hover .project-details-block h4>span{transform:translate(2px,-2px)}
+.other-card-link{display:flex;flex-direction:column;min-height:100%;color:inherit;text-decoration:none}.other-card-link>p{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.9}.other-card-link .other-card-bottom{margin-top:26px;padding-top:20px}.other-card-link:focus-visible{outline:2px solid var(--green);outline-offset:10px}.other-card p{word-break:keep-all}.other-card:hover h3{color:#008b4d}
+.other-project-image{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;margin-bottom:20px;border-radius:8px;border:1px solid rgba(7,31,40,.08);background:#edf2ef}
+.other-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1240px;gap:24px}
+.other-card{min-width:0}
+.other-card-link>p{margin-bottom:26px}
+.other-card-link .other-card-bottom{margin-top:auto}
+@media(max-width:780px){
+  .other-grid{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(320px,calc(100vw - 80px));gap:16px;max-width:none;width:calc(100% + 24px);margin-inline:-12px;padding:12px 12px 22px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;overscroll-behavior-inline:contain;scrollbar-width:thin;scrollbar-color:#bcd8c9 transparent}
+  .other-card{scroll-snap-align:start;scroll-margin-inline:12px}
+}
+.project-meta dd{overflow-wrap:anywhere}.hero-video-controls input:disabled{opacity:.5}.project-information h3,.hero-showcase h2{word-break:keep-all}
+@media(max-width:480px){.trailer-label{left:14px;top:14px;font-size:7px;padding:5px 8px}.project-video-frame video{object-fit:contain}}
+@media(prefers-reduced-motion:reduce){.project-details-block h4>span{transition:none}}
+
+/* Decorative paint only: no layout, typography, spacing or interaction changes. */
+.hero{
+  background-image:url('./assets/backgrounds/orbit-dark.svg'),url('./assets/backgrounds/grid-dark.svg'),radial-gradient(ellipse at 90% 10%,rgba(0,197,104,.14),transparent 55%);
+  background-size:800px 800px,520px 380px,auto;
+  background-position:-460px 52%,right -25px top -45px,0 0;
+  background-repeat:no-repeat;
+}
+.about{
+  background-image:url('./assets/backgrounds/dots-light.svg'),url('./assets/backgrounds/orbit-light.svg'),radial-gradient(ellipse at 100% 20%,rgba(67,154,102,.075),transparent 62%);
+  background-size:520px 390px,740px 740px,auto;
+  background-position:right -75px top -45px,left -445px bottom -285px,0 0;
+  background-repeat:no-repeat;
+}
+.projects{
+  background-image:url('./assets/backgrounds/orbit-dark.svg'),radial-gradient(ellipse at 50% 15%,#103740 0%,#071f28 62%);
+  background-size:800px 800px,auto;
+  background-position:right -440px bottom -285px,0 0;
+  background-repeat:no-repeat;
+}
+.other{
+  background-image:url('./assets/backgrounds/grid-light.svg'),url('./assets/backgrounds/orbit-light.svg'),radial-gradient(ellipse at 0% 75%,rgba(67,154,102,.06),transparent 60%);
+  background-size:620px 450px,680px 680px,auto;
+  background-position:left -110px bottom -30px,right -375px top -205px,0 0;
+  background-repeat:no-repeat;
+}
+.skills{
+  background-image:url('./assets/backgrounds/dots-light.svg'),url('./assets/backgrounds/grid-light.svg');
+  background-size:520px 390px,520px 380px;
+  background-position:right -70px top -35px,left -180px bottom -115px;
+  background-repeat:no-repeat;
+}
+.contact{
+  background-image:url('./assets/backgrounds/orbit-dark.svg'),radial-gradient(ellipse at 50% 100%,rgba(0,197,104,.09),transparent 70%);
+  background-size:800px 800px,auto;
+  background-position:left -450px center,0 0;
+  background-repeat:no-repeat;
+}
+.id-card-portrait{position:relative;overflow:hidden}
+.id-card-portrait>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 28%}
+@media(max-width:780px){
+  .hero{background-size:650px 650px,380px 280px,auto;background-position:-400px 25%,right -90px top -35px,0 0}
+  .about{background-size:400px 300px,580px 580px,auto;background-position:right -125px top -35px,left -365px bottom -245px,0 0}
+  .skills{background-position:right -160px top -65px,left -255px bottom -115px}
+}

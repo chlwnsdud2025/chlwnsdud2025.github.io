@@ -1,0 +1,17 @@
+.backups/
+content-research/
+tools/
+README.md
+media/sintel-*
+styles.css
+editorial.css
+company.css
+reference-refresh.css
+assets/*-sketch.png
+media/projects/showreel.mp4
+assets/classroom-handdrawn.png
+**/*.source.json
+media/projects/**/notes.json
+.vercel/
+vercel.json
+.vercelignore

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="360" viewBox="0 0 480 360">
+  <defs>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#3d855d"/></pattern>
+    <radialGradient id="fade"><stop stop-color="white"/><stop offset="1" stop-color="black"/></radialGradient>
+    <mask id="soft"><rect width="480" height="360" fill="url(#fade)"/></mask>
+  </defs>
+  <rect width="480" height="360" fill="url(#dots)" mask="url(#soft)" opacity=".36"/>
+</svg>
