@@ -1,3 +1,374 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#071f28"><meta name="description" content="직업 전환과 스킬 강화로 성장하는 액션 RPG입니다. 직업별 전투부터 인벤토리·장비·스킬 UI까지 플레이 흐름을 구현했습니다."><title>Belladorn · 최준영</title><link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="../project-detail.css?v=20261012"><script src="../project-detail.js?v=20261012" defer></script></head><body id="top" class="detail-page" style="--project-accent:#efaac9"><a class="skip-link" href="#main">본문으로 바로가기</a><header class="site-header"><div class="shell header-inner"><a class="brand" href="../index.html" aria-label="최준영 포트폴리오 홈">CJY<span>.</span></a><button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button><nav id="site-nav" aria-label="주 메뉴"><a href="../index.html#projects">Projects</a><a href="../index.html#about">About</a><a href="../index.html#contact">Contact</a><a class="nav-external" href="https://github.com/chlwnsdud2025" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></nav></div></header><main id="main"><section class="detail-hero"><div class="shell"><div class="breadcrumb"><a href="../index.html#projects">PROJECTS</a><span>/</span><span>Belladorn</span></div><div class="detail-hero-heading"><div><p class="eyebrow">PROJECT CASE STUDY</p><h1>Belladorn</h1><p>쿼터뷰 RPG 액션</p></div><a class="button button-outline" href="#implementation">구현 사례 보기 <span aria-hidden="true">↓</span></a></div><figure class="detail-system-poster"><img src="../media/projects/belladorn/poster.svg" alt="Belladorn 구현 구조 다이어그램" width="1600" height="1000"><figcaption>프로젝트의 핵심 시스템을 시각화한 다이어그램</figcaption></figure><div class="project-facts"><div><span>PERIOD</span><strong>2025.03.17 — 2025.05.27</strong></div><div><span>TEAM</span><strong>팀 프로젝트 · 대학 캡스톤</strong></div><div><span>MY ROLE</span><strong>전투 · 스킬 · 인벤토리 · UI</strong></div><div><span>PLATFORM</span><strong>PC</strong></div></div></div></section>
-<div class="shell detail-layout"><aside class="detail-toc"><span>IN THIS PROJECT</span><nav aria-label="프로젝트 목차"><a href="#overview">프로젝트 소개</a><a href="#implementation">구현 사례</a><a href="#resources">영상 · 자료</a></nav><a class="toc-home" href="../index.html#projects">← 다른 프로젝트</a></aside><div class="detail-body"><section class="overview" id="overview"><p class="eyebrow">THE PROJECT</p><h2>전투에서 성장까지 이어지는 RPG</h2><p class="overview-lead">직업 전환과 스킬 강화로 성장하는 액션 RPG입니다. 직업별 전투부터 인벤토리·장비·스킬 UI까지 플레이 흐름을 구현했습니다.</p><div class="overview-role"><span>담당한 일</span><p>전투 · 스킬 · 인벤토리 · UI</p></div><div class="tags"><span>Unity 2022</span><span>C#</span><span>URP</span><span>HitBox</span><span>Skill System</span><span>Inventory</span></div><p class="status-note">구현 사례는 원본 프로젝트 포트폴리오를 기준으로 정리했습니다.</p></section><section id="implementation" class="implementation"><div class="detail-section-title"><p class="eyebrow">ENGINEERING NOTES</p><h2>문제에서 구현까지</h2></div><article class="case-study" id="case-1"><div class="case-heading"><span class="case-number">01</span><h3>HitBox와 HurtBox를 분리한 전투</h3></div><div class="case-grid"><div class="case-copy"><div><span class="small-heading">문제</span><p>다양한 기본 공격과 스킬에 공통 피해 처리가 필요했습니다.</p></div><div><span class="small-heading">구현</span><p>HitBox / HurtBox를 분리하고 기본 공격과 QWER 스킬을 구현했습니다.</p></div><div class="case-result"><span class="small-heading">결과</span><p>공격 판정과 피격 처리를 분리한 전투 구조를 구성했습니다.</p></div></div><div class="case-visual"><div class="flow-diagram"><span class="diagram-label">SYSTEM FLOW</span><ol><li><span>01</span><strong>HitBox</strong></li><li><span>02</span><strong>HurtBox</strong></li><li><span>03</span><strong>공통 피해 처리</strong></li><li><span>04</span><strong>공격 · 스킬</strong></li></ol></div></div></div></article><article class="case-study" id="case-2"><div class="case-heading"><span class="case-number">02</span><h3>6종 직업과 전용 스킬 세트</h3></div><div class="case-grid"><div class="case-copy"><div><span class="small-heading">문제</span><p>직업을 전환할 때 행동과 스킬 구성이 함께 바뀌어야 했습니다.</p></div><div><span class="small-heading">구현</span><p>6종 직업의 스킬 세트와 상태이상 적용을 구현했습니다.</p></div><div class="case-result"><span class="small-heading">결과</span><p>직업에 따라 전투 구성이 바뀌는 성장 흐름을 구성했습니다.</p></div></div><div class="case-visual"><div class="flow-diagram"><span class="diagram-label">SYSTEM FLOW</span><ol><li><span>01</span><strong>직업 선택</strong></li><li><span>02</span><strong>전용 스킬 세트</strong></li><li><span>03</span><strong>상태이상</strong></li><li><span>04</span><strong>전투 구성 변경</strong></li></ol></div></div></div></article><article class="case-study" id="case-3"><div class="case-heading"><span class="case-number">03</span><h3>스킬 슬롯과 포인트 강화</h3></div><div class="case-grid"><div class="case-copy"><div><span class="small-heading">문제</span><p>스킬 배치와 성장 선택을 UI로 제공해야 했습니다.</p></div><div><span class="small-heading">구현</span><p>드래그 앤 드롭 스킬 슬롯과 스킬 포인트 업그레이드를 구현했습니다.</p></div><div class="case-result"><span class="small-heading">결과</span><p>스킬 구성을 바꾸고 강화하는 사용자 흐름을 연결했습니다.</p></div></div><div class="case-visual"><div class="flow-diagram"><span class="diagram-label">SYSTEM FLOW</span><ol><li><span>01</span><strong>드래그 앤 드롭</strong></li><li><span>02</span><strong>스킬 슬롯</strong></li><li><span>03</span><strong>스킬 포인트</strong></li><li><span>04</span><strong>스킬 강화</strong></li></ol></div></div></div></article><article class="case-study" id="case-4"><div class="case-heading"><span class="case-number">04</span><h3>인벤토리·장비·퀵슬롯</h3></div><div class="case-grid"><div class="case-copy"><div><span class="small-heading">문제</span><p>획득·장착·사용과 캐릭터 상태를 여러 UI가 공유해야 했습니다.</p></div><div><span class="small-heading">구현</span><p>아이템 이동, 장착, 캐릭터 프리뷰와 퀘스트를 구현했습니다.</p></div><div class="case-result"><span class="small-heading">결과</span><p>아이템 관리부터 장비 변경까지 RPG의 기본 UI를 구성했습니다.</p></div></div><div class="case-visual"><div class="flow-diagram"><span class="diagram-label">SYSTEM FLOW</span><ol><li><span>01</span><strong>아이템 획득</strong></li><li><span>02</span><strong>인벤토리 이동</strong></li><li><span>03</span><strong>장비 · 퀵슬롯</strong></li><li><span>04</span><strong>캐릭터 프리뷰</strong></li></ol></div></div></div></article></section><section class="resources" id="resources"><div class="detail-section-title"><p class="eyebrow">TAKE A CLOSER LOOK</p><h2>영상과 프로젝트 자료</h2></div><div class="resource-list"><a class="resource-link" href="https://www.canva.com/d/mzu8Fvwvj8IVG7d" target="_blank" rel="noopener noreferrer"><span><small>PORTFOLIO</small>원본 프로젝트 포트폴리오</span><b aria-hidden="true">↗</b></a><a class="resource-link" href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio" target="_blank" rel="noopener noreferrer"><span><small>SOURCE CODE</small>GitHub 저장소</span><b aria-hidden="true">↗</b></a><a class="resource-link" href="https://www.youtube.com/watch?v=UThz7KhKTDc" target="_blank" rel="noopener noreferrer"><span><small>VIDEO</small>플레이 영상 (YouTube)</span><b aria-hidden="true">↗</b></a></div><figure class="portfolio-original"><a href="https://www.canva.com/d/mzu8Fvwvj8IVG7d" target="_blank" rel="noopener noreferrer"><img src="../media/projects/belladorn/portfolio-page.png" alt="Belladorn 원본 포트폴리오의 실제 구현 화면과 설명" width="596" height="335" loading="lazy"></a><figcaption>실제 구현 화면이 담긴 원본 포트폴리오 · 클릭하면 Canva에서 확인할 수 있습니다.</figcaption></figure></section></div></div><a class="next-project" href="pixel-chroma.html"><div class="shell"><span>NEXT PROJECT</span><h2>Pixel Chroma</h2><span class="next-arrow" aria-hidden="true">↗</span></div></a></main><footer class="footer"><div class="shell footer-inner"><a class="brand" href="../index.html">CJY<span>.</span></a><span>© 2026 최준영 · Unity Client Developer</span><a href="../index.html">포트폴리오 홈 <span aria-hidden="true">↑</span></a></div></footer></body></html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#071f28">
+<meta name="description" content="과거의 영웅을 계승해 스킬을 강화하며 성장하는 쿼터뷰 액션 RPG. 한림대학교 캡스톤디자인 팀 프로젝트로, 직업 · 스킬 · 히트박스 전투 · 인벤토리 / 장비 · 퀘스트 · 씬 흐름 구현 사례.">
+<title>Belladorn · 최준영</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../project-detail.css?v=2026101202">
+<link rel="stylesheet" href="../project-case.css?v=2026101202">
+<script src="../project-detail.js?v=2026101202" defer></script>
+</head>
+<body id="top" class="detail-page case-page" style="--project-accent:#efaac9">
+<a class="skip-link" href="#main">본문으로 바로가기</a>
+<header class="site-header"><div class="shell header-inner"><a class="brand" href="../index.html" aria-label="최준영 포트폴리오 홈">CJY<span>.</span></a><button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button><nav id="site-nav" aria-label="주 메뉴"><a href="../index.html#projects">Projects</a><a href="../index.html#about">About</a><a href="../index.html#contact">Contact</a><a class="nav-external" href="https://github.com/chlwnsdud2025" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></nav></div></header>
+
+<main id="main">
+<section class="detail-hero"><div class="shell">
+  <div class="breadcrumb"><a href="../index.html#projects">PROJECTS</a><span>/</span><span>Belladorn</span></div>
+  <div class="detail-hero-heading">
+    <div>
+      <p class="eyebrow">PROJECT CASE STUDY · CAPSTONE DESIGN</p>
+      <h1>Belladorn</h1>
+      <p class="cs-tagline">과거의 영웅을 계승해 스킬을 강화하며 성장하는 <b>쿼터뷰 액션 RPG</b>입니다. 한림대학교 캡스톤디자인 3인 팀 프로젝트로, 저는 직업 · 스킬 · 전투 판정부터 인벤토리 · 장비 · 퀘스트 · UI · 씬 흐름까지 플레이어가 성장하는 시스템 전반을 맡았습니다.</p>
+      <div class="cs-hero-actions">
+        <a class="primary" href="https://www.youtube.com/watch?v=UThz7KhKTDc" target="_blank" rel="noopener noreferrer">플레이 영상 <span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio" target="_blank" rel="noopener noreferrer">GitHub 코드 <span aria-hidden="true">↗</span></a>
+        <a href="https://www.canva.com/d/mzu8Fvwvj8IVG7d" target="_blank" rel="noopener noreferrer">Canva 포트폴리오 <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <a class="button button-outline" href="#job">구현 사례 보기 <span aria-hidden="true">↓</span></a>
+  </div>
+  <div class="video-player"><video autoplay muted loop playsinline controls preload="metadata" poster="../media/projects/belladorn/trailer-poster.jpg" aria-label="Belladorn 20초 플레이 하이라이트"><source src="../media/projects/belladorn/trailer.mp4" type="video/mp4"></video><p class="video-fallback" hidden>영상을 불러오지 못했습니다. <a href="../media/projects/belladorn/trailer.mp4">영상 파일 열기</a></p></div>
+  <div class="project-facts">
+    <div><span>PERIOD</span><strong>2025.03.17 — 2025.05.27 (약 10주)</strong></div>
+    <div><span>TEAM</span><strong>3인 팀 · 한림대학교 캡스톤디자인</strong></div>
+    <div><span>MY ROLE</span><strong>직업 · 스킬 · 전투 판정 · 플레이어 스탯 · 인벤토리 / 장비 · 퀘스트 · UI · 씬 흐름</strong></div>
+    <div><span>ENGINE / PLATFORM</span><strong>Unity 2022.3.44f1 · PC</strong></div>
+  </div>
+</div></section>
+
+<div class="shell detail-layout">
+<aside class="detail-toc"><span>IN THIS PROJECT</span><nav aria-label="프로젝트 목차">
+  <a href="#overview">프로젝트 개요</a>
+  <a href="#game">게임 소개</a>
+  <a href="#job">01 직업 시스템</a>
+  <a href="#skill">02 스킬 · 히트박스</a>
+  <a href="#upgrade">03 스킬 강화 · 장착</a>
+  <a href="#inventory">04 인벤토리 · 장비</a>
+  <a href="#quest">05 퀘스트 · 대화</a>
+  <a href="#scene">06 씬 흐름</a>
+  <a href="#resources">영상 · 자료</a>
+</nav><a class="toc-home" href="../index.html#projects">← 다른 프로젝트</a></aside>
+
+<div class="detail-body">
+
+<!-- ================= OVERVIEW ================= -->
+<section class="cs-section" id="overview">
+  <p class="eyebrow">PROJECT OVERVIEW</p>
+  <h2>직업 전환과 스킬 강화로 성장하는 액션 RPG를 만들자</h2>
+  <p class="cs-lead">Belladorn은 한림대학교 캡스톤디자인(졸업 프로젝트)으로 3인이 10주 동안 만든 쿼터뷰 액션 RPG입니다. Unity 기초 수업으로 게임 개발을 시작한 뒤 만든 프로젝트로, 저는 <strong>플레이어가 성장하는 모든 경로</strong> — 직업, 스킬, 장비, 퀘스트 — 와 그것을 보여 주는 UI를 맡았습니다.</p>
+  <p class="cs-lead">기능이 많은 만큼 “데이터만 추가하면 늘어나는 구조”를 목표로 했습니다. 직업 · 스킬 · 강화 · 아이템 · 퀘스트 · 조건을 모두 ScriptableObject로 정의하고, 판정 · 스탯 변경 · 진행도 갱신은 각각 하나의 경로로 모았습니다.</p>
+
+  <div class="cs-stats">
+    <div class="cs-stat"><b>57<small>%</small></b><span>직접 작성한 C# 약 9,800줄 중 약 5,700줄 (git blame 기준)</span></div>
+    <div class="cs-stat"><b>6<small>타입</small></b><span>JobType 하나로 모델 · 애니메이터 · 스킬 · 스탯 교체</span></div>
+    <div class="cs-stat"><b>5<small>종</small></b><span>조합해서 쓰는 퀘스트 조건 (처치 · 수집 · 사용 · 대화 · 도달)</span></div>
+    <div class="cs-stat"><b>48<small>칸</small></b><span>스택 인벤토리 + 7부위 장비 + 퀵슬롯 4칸</span></div>
+  </div>
+
+  <div class="cs-role">
+    <div>
+      <h3>내가 맡은 일</h3>
+      <ul class="cs-list">
+        <li><strong>직업 시스템</strong> — JobType 하나로 모델 · 애니메이터 · 스킬 세트 · 스탯을 데이터로 교체</li>
+        <li><strong>스킬 실행 · 히트박스</strong> — 애니메이션 이벤트 타이밍 + Shape / 다단 히트 / 투사체 히트박스 프리팹</li>
+        <li><strong>스킬 강화 · QWER 장착</strong> — 포인트 레벨업 · 분기 강화 · 같은 계열 중복 장착 방지</li>
+        <li><strong>인벤토리 · 장비 · 퀵슬롯</strong> — 직업 제한 장비 · StatModifier 단일 경로 · 드래그 앤 드롭</li>
+        <li><strong>퀘스트 · 대화</strong> — 조건 SO 조합 · 이벤트 기반 진행 · 연계 퀘스트</li>
+        <li><strong>씬 흐름 · 캐릭터 선택</strong> — 4개 씬 · 매니저 유지 · 직업 선택 화면</li>
+      </ul>
+    </div>
+    <div>
+      <h3>프로젝트 정보</h3>
+      <ul class="cs-list">
+        <li><strong>장르</strong> — 쿼터뷰 RPG 액션</li>
+        <li><strong>개발 기간</strong> — 2025.03.17 – 2025.05.27 (약 10주)</li>
+        <li><strong>팀</strong> — 3인 · 한림대학교 2025학년도 1학기 캡스톤디자인</li>
+        <li><strong>개발 환경</strong> — Unity 2022.3.44f1, C#, URP, Input System, NavMesh</li>
+        <li><strong>팀원 담당</strong> — 적 · 보스 AI와 공격 패턴, 이동 · 입력 · 카메라, 맵</li>
+      </ul>
+    </div>
+  </div>
+  <div class="cs-tags"><span>Unity 2022.3</span><span>C#</span><span>URP</span><span>ScriptableObject</span><span>Animation Event</span><span>Root Motion</span><span>uGUI</span><span>Drag &amp; Drop</span><span>RenderTexture</span><span>Input System</span></div>
+</section>
+
+<!-- ================= GAME ================= -->
+<section class="cs-section" id="game">
+  <p class="eyebrow">THE GAME</p>
+  <h2>한 생명을 대가로 불러낸, 과거의 영웅</h2>
+  <p class="cs-lead">봉인의 열쇠가 시간의 문을 열고, 한 생명을 대가로 과거의 영웅을 현재로 불러냅니다. 플레이어는 계승할 영웅(직업)을 골라 숲과 유적을 지나며 퀘스트를 수행하고, 챕터 1의 보스에 도전합니다.</p>
+
+  <div class="cs-grid">
+    <figure>
+      <div class="cs-media"><video class="cs-clip" width="960" height="540" muted loop playsinline preload="none" poster="../media/projects/belladorn/clips/hero_combat.jpg" data-src="../media/projects/belladorn/clips/hero_combat.mp4" aria-label="마법사 직업으로 QWER 스킬을 사용해 스켈레톤과 싸우는 장면"></video></div>
+      <figcaption>마법사 직업의 QWER 스킬 전투</figcaption>
+    </figure>
+    <figure>
+      <div class="cs-media"><video class="cs-clip" width="960" height="540" muted loop playsinline preload="none" poster="../media/projects/belladorn/clips/hero_boss.jpg" data-src="../media/projects/belladorn/clips/hero_boss.mp4" aria-label="챕터 1 보스전"></video></div>
+      <figcaption>챕터 1 보스전</figcaption>
+    </figure>
+  </div>
+
+  <h3 class="cs-sub">진행 흐름</h3>
+  <div class="cs-flow"><span>메인 메뉴</span><i>→</i><span>튜토리얼</span><i>→</i><span>유물 컷신</span><i>→</i><span>영웅(직업) 선택</span><i>→</i><span>챕터 1 · NPC 퀘스트</span><i>→</i><span>보스전</span></div>
+
+  <div class="cs-cards">
+    <div class="cs-card"><span class="tag">HERO</span><h3>영웅 계승</h3><p>튜토리얼을 마치면 계승할 영웅을 고릅니다. 직업마다 모델 · 애니메이션 · 스킬 세트 · 기본 스탯이 모두 달라집니다.</p></div>
+    <div class="cs-card"><span class="tag">SKILL</span><h3>QWER 스킬 빌드</h3><p>레벨업으로 얻은 포인트로 스킬 레벨을 올리고, 갈라지는 강화 스킬 중 하나를 골라 QWER 슬롯에 자유롭게 배치합니다.</p></div>
+    <div class="cs-card"><span class="tag">GEAR</span><h3>장비와 소비 아이템</h3><p>직업에 맞는 장비를 7부위에 장착하고, 포션과 버프 아이템을 퀵슬롯에 등록해 전투 중 사용합니다.</p></div>
+    <div class="cs-card"><span class="tag">QUEST</span><h3>NPC와 퀘스트</h3><p>숲의 NPC와 대화하며 처치 · 수집 · 아이템 사용 · 지점 도달 퀘스트를 이어 받고, 끝에서 챕터 보스를 만납니다.</p></div>
+  </div>
+
+  <figure class="cs-fig"><div class="cs-media light"><img src="../media/projects/belladorn/bd_skill_flow.svg" width="1600" height="900" loading="lazy" alt="직업 변경, 스킬 실행, 히트박스 판정 흐름도"></div><figcaption>담당 시스템 한눈에 보기 — 직업 변경 · 스킬 실행 · 히트박스 판정 흐름</figcaption></figure>
+</section>
+
+<!-- ================= 01 JOB ================= -->
+<section class="cs-section" id="job">
+  <p class="eyebrow">ENGINEERING NOTES</p>
+  <h2>구현 사례</h2>
+
+  <article class="cs-case">
+    <div class="cs-case-head"><span class="num">01</span><h3>직업 시스템 — JobType 하나로 모든 것을 교체</h3><p>직업 변경은 JobType 하나만 넘기면 모델 · 애니메이터 · 스킬 세트 · 스탯이 데이터(ScriptableObject)로 한 번에 바뀝니다.</p></div>
+
+    <div class="cs-body">
+      <figure style="margin:0"><div class="cs-media"><video class="cs-clip" width="960" height="540" muted loop playsinline preload="none" poster="../media/projects/belladorn/clips/job_select.jpg" data-src="../media/projects/belladorn/clips/job_select.mp4" aria-label="직업 선택 화면"></video></div><figcaption>영웅(직업) 선택 — 직업 설명 · 난이도 · 추천 대상 · 플레이 스타일</figcaption></figure>
+      <div class="cs-block"><span class="cs-label">설계</span><ul class="cs-list">
+        <li><strong>데이터 분리</strong> — 직업별 <code class="k">JobResources</code>(모델 프리팹 · Animator Controller · Avatar), <code class="k">JobSkillData</code>(스킬 세트), <code class="k">JobStatusData</code>(기본 스탯 · 레벨당 성장치). 직업 추가는 데이터 추가로 처리</li>
+        <li><strong>교체 순서</strong> — 모델 → Animator · Avatar → 스킬 세트 → 상태 머신 Idle → 직업 스탯 → UI 갱신</li>
+        <li><strong>이벤트 알림</strong> — 교체가 끝나면 한 프레임 뒤 <code class="k">OnJobChanged</code> 발행 → 캐릭터 프리뷰 · 스킬 UI가 새 모델 기준으로 갱신</li>
+        <li><strong>씬 유지</strong> — <code class="k">DontDestroyOnLoad</code> 싱글턴, 씬이 로드되면 플레이어를 다시 찾아 현재 직업을 재적용</li>
+      </ul></div>
+    </div>
+
+    <details class="cs-code" open><summary>직업 하나로 모델 · 애니메이터 · 스킬 · 스탯을 함께 교체 (발췌) <span>JobManager.cs</span></summary><pre><code>public void ChangeJob(JobType newJob)
+{
+    currentJob = newJob;
+    var res = jobResourcesDict[newJob];
+
+    if (currentModel != null) Destroy(currentModel);
+    currentModel = Instantiate(res.modelPrefab, modelParent);            <span class="c">// 1. 모델</span>
+
+    playerAnimator.runtimeAnimatorController = res.animatorController;   <span class="c">// 2. 애니메이터</span>
+    playerAnimator.avatar = res.avatar;
+
+    if (GetSkillData(newJob) is JobSkillData skillData)
+        playerSkill.LoadSkillsFromData(skillData);                       <span class="c">// 3. 스킬 세트</span>
+
+    stateMachine.ChangeState(PlayerStateMachine.PlayerState.Idle);
+    playerStatus.ApplyJobStats(GetStatData(newJob));                     <span class="c">// 4. 직업 스탯</span>
+    playerStatus.UpdateAllUI();
+
+    StartCoroutine(InvokeJobChangedDelayed(newJob));                     <span class="c">// 5. 한 프레임 뒤 OnJobChanged</span>
+}</code></pre></details>
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Job/JobManager.cs" target="_blank" rel="noopener noreferrer">JobManager.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Job/JobStatusData.cs" target="_blank" rel="noopener noreferrer">JobStatusData.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/SkillData.cs" target="_blank" rel="noopener noreferrer">SkillData.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/PlayerStatus.cs" target="_blank" rel="noopener noreferrer">PlayerStatus.cs</a></div>
+  </article>
+
+  <!-- ================= 02 SKILL ================= -->
+  <article class="cs-case" id="skill">
+    <div class="cs-case-head"><span class="num">02</span><h3>스킬 실행 · 히트박스 — 타이밍은 애니메이션에, 범위는 프리팹에</h3><p>판정 타이밍은 애니메이션 이벤트에, 판정 범위 · 횟수 · 형태는 히트박스 프리팹에 맡겨 스킬마다 판정 코드를 새로 짜지 않도록 구성했습니다.</p></div>
+
+    <figure class="cs-fig"><div class="cs-media"><video class="cs-clip" width="960" height="540" muted loop playsinline preload="none" poster="../media/projects/belladorn/clips/boss_fight.jpg" data-src="../media/projects/belladorn/clips/boss_fight.mp4" aria-label="보스전에서 여러 스킬로 공격하는 장면"></video></div><figcaption>보스전 — 단타 · 다단 히트 · 투사체 스킬이 모두 같은 히트박스 구조로 동작</figcaption></figure>
+
+    <div class="cs-table-wrap"><table class="cs-table">
+      <thead><tr><th>설계</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>입력 → 실행</td><td>QWER 슬롯 키로 장착된 스킬을 조회 → 이동 정지 · 마우스 방향 회전 → 스킬 애니메이션 재생 (Root Motion)</td></tr>
+        <tr><td>타이밍</td><td>모션의 타격 프레임에 넣은 Animation Event가 <code class="k">ActivateHitbox</code> · <code class="k">SpawnEffect</code> · <code class="k">PlaySkillSound</code>를 호출</td></tr>
+        <tr><td>범위</td><td>히트박스 프리팹마다 Sphere · Box · Cone(각도 · 거리) 중 선택</td></tr>
+        <tr><td>다단 히트</td><td><code class="k">startDelay</code> · <code class="k">repeatCount</code> · <code class="k">repeatInterval</code>만으로 단타 · 연타 구성</td></tr>
+        <tr><td>투사체</td><td>속도로 날아가다 충돌하면 2차 폭발 히트박스(<code class="k">secondaryHitboxPrefab</code>)를 이어서 생성</td></tr>
+        <tr><td>위치 기준</td><td>시전자를 따라가는 판정 / 시전 순간의 마우스 지점에 고정되는 판정</td></tr>
+        <tr><td>피아 구분</td><td><code class="k">PlayerHitbox</code> · <code class="k">EnemyHitbox</code> 태그와 레이어 마스크로 대상을 거른 뒤 <code class="k">CharacterStatus.TakeDamage()</code> 호출 — 공격 판정과 피격 처리를 분리</td></tr>
+      </tbody>
+    </table></div>
+
+    <details class="cs-code"><summary>시작 지연 · 반복 횟수 · 간격만으로 단타 / 다단 히트 구성 (발췌) <span>HitBox.cs</span></summary><pre><code>private IEnumerator HandleHitbox()
+{
+    yield return new WaitForSeconds(startDelay);
+
+    for (int i = 0; i &lt; repeatCount; i++)
+    {
+        ApplyDamage();                                    <span class="c">// Shape별 Overlap 판정 → TakeDamage</span>
+        yield return new WaitForSeconds(0.1f);
+
+        if (i &lt; repeatCount - 1)
+            yield return new WaitForSeconds(repeatInterval);
+    }
+
+    yield return new WaitForSeconds(duration);
+    Destroy(gameObject);
+}</code></pre></details>
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/PlayerState/PlayerSkillController.cs" target="_blank" rel="noopener noreferrer">PlayerSkillController.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/GameSystem/HitBox.cs" target="_blank" rel="noopener noreferrer">HitBox.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/PlayerState/PlayerAttack.cs" target="_blank" rel="noopener noreferrer">PlayerAttack.cs</a></div>
+  </article>
+
+  <!-- ================= 03 UPGRADE ================= -->
+  <article class="cs-case" id="upgrade">
+    <div class="cs-case-head"><span class="num">03</span><h3>스킬 강화와 QWER 장착 — 갈라지는 강화, 겹치지 않는 슬롯</h3><p>스킬 포인트로 레벨을 올리고, 원본에서 갈라지는 강화 스킬을 골라 QWER에 자유롭게 등록합니다. 원본과 강화 스킬은 같은 계열로 묶어 동시에 장착되지 않게 막았습니다.</p></div>
+
+    <div class="cs-body">
+      <figure style="margin:0"><div class="cs-media"><video class="cs-clip" width="960" height="540" muted loop playsinline preload="none" poster="../media/projects/belladorn/clips/skill_equip.jpg" data-src="../media/projects/belladorn/clips/skill_equip.mp4" aria-label="스킬 창에서 스킬을 강화하고 QWER 슬롯에 등록하는 장면"></video></div><figcaption>스킬 창 — 강화하고 QWER 슬롯으로 드래그해 등록</figcaption></figure>
+      <div class="cs-block"><span class="cs-label">설계</span><ul class="cs-list">
+        <li><strong>스킬 포인트</strong> — 레벨업 시 획득(최대 8) · 레벨업 비용 = 다음 레벨(Lv.1 → 2는 2포인트) · 레벨을 내리면 환불 · 최대 Lv.5</li>
+        <li><strong>분기 강화</strong> — 원본 스킬마다 <code class="k">SkillUpgradeData</code>에 강화 옵션(최대 3개), 강화 스킬은 <code class="k">originalSkill</code>로 원본과 연결해 레벨 동기화</li>
+        <li><strong>드래그 앤 드롭 장착</strong> — 스킬 창에서 QWER 슬롯으로 끌어 등록</li>
+        <li><strong>강화 즉시 반영</strong> — 이미 장착된 스킬을 강화하면 같은 슬롯에 강화 버전이 바로 들어감</li>
+      </ul></div>
+    </div>
+
+    <details class="cs-code" open><summary>원본 스킬과 강화 스킬은 같은 계열 — 중복 장착 방지 <span>SkillEquipManager.cs</span></summary><pre><code>public void EquipSkill(string key, SkillInfo skill)
+{
+    foreach (var pair in equippedSkills)
+    {
+        if (pair.Key == key) continue;                    <span class="c">// 자기 슬롯은 제외</span>
+        bool isSameLine =
+            pair.Value == skill ||
+            pair.Value.originalSkill == skill ||
+            skill.originalSkill == pair.Value;
+        if (isSameLine) return;
+    }
+    equippedSkills[key] = skill;
+    skill.skillKey = key;
+}</code></pre></details>
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/PlayerUI/Skill_UI/SkillEquipManager.cs" target="_blank" rel="noopener noreferrer">SkillEquipManager.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/PlayerUI/Skill_UI/SkillSlotUI.cs" target="_blank" rel="noopener noreferrer">SkillSlotUI.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/PlayerUI/Skill_UI/SkillUpgradeManager.cs" target="_blank" rel="noopener noreferrer">SkillUpgradeManager.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/SkillUpgradeData.cs" target="_blank" rel="noopener noreferrer">SkillUpgradeData.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/SkillPointManager.cs" target="_blank" rel="noopener noreferrer">SkillPointManager.cs</a></div>
+  </article>
+
+  <!-- ================= 04 INVENTORY ================= -->
+  <article class="cs-case" id="inventory">
+    <div class="cs-case-head"><span class="num">04</span><h3>인벤토리 · 장비 · 퀵슬롯 — 스탯이 바뀌는 길은 하나</h3><p>장비와 소비 아이템 버프가 같은 스탯 변경 경로(StatModifier)를 쓰게 해서, 적용과 해제가 항상 대칭이 되도록 구성했습니다.</p></div>
+
+    <div class="cs-grid">
+      <figure><div class="cs-media"><video class="cs-clip" width="960" height="540" muted loop playsinline preload="none" poster="../media/projects/belladorn/clips/equip_stats.jpg" data-src="../media/projects/belladorn/clips/equip_stats.mp4" aria-label="장비를 착용하면 캐릭터 정보창의 능력치가 바뀌는 장면"></video></div><figcaption>장비 착용 → 체력 · 치명타 등 능력치 즉시 반영</figcaption></figure>
+      <figure><div class="cs-media"><video class="cs-clip" width="960" height="540" muted loop playsinline preload="none" poster="../media/projects/belladorn/clips/item_quickslot.jpg" data-src="../media/projects/belladorn/clips/item_quickslot.mp4" aria-label="인벤토리의 포션을 퀵슬롯으로 끌어 등록하는 장면"></video></div><figcaption>인벤토리의 포션을 퀵슬롯으로 드래그해 등록</figcaption></figure>
+    </div>
+
+    <div class="cs-table-wrap"><table class="cs-table">
+      <thead><tr><th>설계</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>아이템 데이터</td><td><code class="k">ItemData</code>(SO)를 상속해 <code class="k">EquipmentData</code>(7부위 · 착용 가능 직업 · StatModifier 목록), <code class="k">ConsumableData</code>(체력 · 마나 회복 · 공격 / 방어 버프 · 지속 회복)로 확장</td></tr>
+        <tr><td>인벤토리</td><td>48칸 · 같은 아이템은 최대 스택까지 합치고 남은 수량은 빈 칸에 · 획득 시 퀘스트 <code class="k">CollectItem</code> 조건 갱신</td></tr>
+        <tr><td>장비</td><td>착용 가능 직업 확인 → 같은 부위 기존 장비 해제 → StatModifier 적용 / 해제 시 같은 값을 음수로 되돌림</td></tr>
+        <tr><td>스탯 경로 통일</td><td>장비 · 소비 버프 모두 <code class="k">StatusEffectApplier</code>로 스탯을 바꿔, 어디서 바꿨든 같은 방식으로 되돌릴 수 있음</td></tr>
+        <tr><td>퀵슬롯</td><td>1 ~ 4 키로 소비 아이템 사용 → 수량 차감 → 퀘스트 <code class="k">UseItem</code> 조건 갱신</td></tr>
+        <tr><td>UI</td><td>인벤토리 ↔ 장비 ↔ 퀵슬롯 드래그 앤 드롭 · 툴팁 · 창 헤더 드래그 이동 · 현재 직업 모델을 비추는 캐릭터 프리뷰(RenderTexture)</td></tr>
+      </tbody>
+    </table></div>
+
+    <details class="cs-code"><summary>장착은 StatModifier 적용, 해제는 같은 값을 음수로 (발췌) <span>EquipmentManager.cs</span></summary><pre><code>public void EquipItem(EquipmentData equipment)
+{
+    if (!equipment.allowedJobs.Contains(JobManager.Instance.GetCurrentJob())) return;   <span class="c">// 직업 제한</span>
+
+    if (equippedItems.TryGetValue(equipment.equipmentType, out var oldEquip))
+        UnequipItem(oldEquip);                                                          <span class="c">// 같은 부위 교체</span>
+
+    equippedItems[equipment.equipmentType] = equipment;
+    var modifiers = equipment.GetAllStatModifiers();
+    appliedModifiers[equipment.equipmentType] = new List&lt;StatModifier&gt;(modifiers);
+    StatusEffectApplier.ApplyStatModifiers(playerStatus, modifiers);
+}
+
+public void UnequipItem(EquipmentData item)
+{
+    var negativeMods = new List&lt;StatModifier&gt;();
+    foreach (var mod in appliedModifiers[item.equipmentType])
+        negativeMods.Add(new StatModifier(mod.type, -mod.value, mod.isFlat));
+    StatusEffectApplier.ApplyStatModifiers(playerStatus, negativeMods);
+    <span class="c">// ...</span>
+}</code></pre></details>
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/PlayerUI/Inventory/InventoryManager.cs" target="_blank" rel="noopener noreferrer">InventoryManager.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Item/Item%20Data/EquipmentManager.cs" target="_blank" rel="noopener noreferrer">EquipmentManager.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Job/StatusEffectApplier.cs" target="_blank" rel="noopener noreferrer">StatusEffectApplier.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Item/Item%20Data/ConsumableData.cs" target="_blank" rel="noopener noreferrer">ConsumableData.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/PlayerUI/Inventory/QuikSlotUI.cs" target="_blank" rel="noopener noreferrer">QuikSlotUI.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/Player/PlayerUI/StateUI/CharacterPreViewUI.cs" target="_blank" rel="noopener noreferrer">CharacterPreViewUI.cs</a></div>
+  </article>
+
+  <!-- ================= 05 QUEST ================= -->
+  <article class="cs-case" id="quest">
+    <div class="cs-case-head"><span class="num">05</span><h3>퀘스트 · 대화 — 시스템은 “무슨 일이 일어났는지”만 알린다</h3><p>퀘스트는 조건 ScriptableObject를 조합한 에셋으로 만들고, 적 사망 · 아이템 획득 같은 각 시스템은 이벤트 종류와 ID만 넘겨 진행도를 올립니다.</p></div>
+
+    <figure class="cs-fig"><div class="cs-media light"><img src="../media/projects/belladorn/bd_quest_flow.svg" width="1600" height="900" loading="lazy" alt="퀘스트 시스템 구조도"></div><figcaption>퀘스트 시스템 구조 — 조건 SO 조합 · 이벤트 기반 진행 · 연계 퀘스트</figcaption></figure>
+
+    <div class="cs-grid">
+      <figure><div class="cs-media"><img src="../media/projects/belladorn/bd_quest_window.jpg" width="900" height="356" loading="lazy" alt="퀘스트 창에서 진행 중 퀘스트와 보상을 확인하는 장면"></div><figcaption>퀘스트 창 — 진행 / 완료 목록 · 조건 진행도 · 보상 수령</figcaption></figure>
+      <figure><div class="cs-media"><video class="cs-clip" width="960" height="540" muted loop playsinline preload="none" poster="../media/projects/belladorn/clips/npc_dialogue.jpg" data-src="../media/projects/belladorn/clips/npc_dialogue.mp4" aria-label="숲의 노인 NPC와 대화하며 퀘스트를 받는 장면"></video></div><figcaption>NPC 대화로 퀘스트 수락 · 진행</figcaption></figure>
+    </div>
+
+    <div class="cs-body">
+      <div class="cs-block"><span class="cs-label">설계</span><ul class="cs-list">
+        <li><strong>조건 조합</strong> — 추상 <code class="k">QuestCondition</code>(SO)을 상속한 KillEnemy · CollectItem · UseItem · TalkToNPC · ReachArea 조건을 퀘스트마다 섞어서 구성</li>
+        <li><strong>이벤트 기반 진행</strong> — 각 시스템은 <code class="k">UpdateCondition(type, id)</code>만 호출 → 진행 중인 퀘스트의 맞는 조건만 갱신</li>
+        <li><strong>상태 분리</strong> — 정의(<code class="k">QuestData</code>)와 런타임 진행(<code class="k">PlayerQuestProgress</code>) 분리 · InProgress → Completed → Rewarded</li>
+      </ul></div>
+      <div class="cs-block"><span class="cs-label">연결</span><ul class="cs-list">
+        <li><strong>연계 퀘스트</strong> — 보상을 받으면 <code class="k">nextQuestID</code>로 다음 퀘스트를 불러와 자동 수락 → 메인 스토리를 에셋 연결로 구성</li>
+        <li><strong>영역 조건</strong> — 수락 시 목표 지점에 트리거를 생성하고, 도달하면 제거</li>
+        <li><strong>UI 갱신</strong> — <code class="k">OnQuestUpdated</code> 이벤트로 HUD · 퀘스트 목록 · 상세 창 갱신, NPC 대화와 수락 내레이션 출력</li>
+      </ul></div>
+    </div>
+
+    <details class="cs-code"><summary>시스템은 type · id만 넘기고, 조건 매칭은 QuestManager가 (발췌) <span>QuestManager.cs</span></summary><pre><code>public void UpdateCondition(string type, string identifier, int amount = 1)
+{
+    foreach (var progress in activeQuests)
+    {
+        if (progress.state != QuestState.InProgress) continue;
+
+        for (int i = 0; i &lt; progress.questData.conditions.Count; i++)
+        {
+            var condition = progress.questData.conditions[i];
+            if (condition is KillEnemyCondition killCond &amp;&amp; type == "KillEnemy" &amp;&amp; killCond.targetEnemyTag == identifier)
+                progress.IncrementProgress(i, amount);
+            else if (condition is ReachAreaCondition areaCond &amp;&amp; type == "ReachArea" &amp;&amp; areaCond.areaID == identifier)
+            {
+                progress.IncrementProgress(i, amount);
+                QuestAreaTriggerSpawner.Instance?.RemoveTrigger(identifier);
+            }
+            <span class="c">// CollectItem · TalkToNPC · UseItem도 같은 방식</span>
+        }
+
+        if (progress.IsAllConditionsMet() &amp;&amp; progress.state != QuestState.Completed)
+            progress.state = QuestState.Completed;
+
+        OnQuestUpdated?.Invoke(progress);
+    }
+}</code></pre></details>
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/GameSystem/Quest/QuestManager.cs" target="_blank" rel="noopener noreferrer">QuestManager.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/GameSystem/Quest/QuestData.cs" target="_blank" rel="noopener noreferrer">QuestData.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/GameSystem/Quest/QuestCondition.cs" target="_blank" rel="noopener noreferrer">QuestCondition.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/GameSystem/Quest/PlayerQuestProgress.cs" target="_blank" rel="noopener noreferrer">PlayerQuestProgress.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/GameSystem/Quest/NPCInteraction.cs" target="_blank" rel="noopener noreferrer">NPCInteraction.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/GameSystem/Quest/DialogueSystem.cs" target="_blank" rel="noopener noreferrer">DialogueSystem.cs</a></div>
+  </article>
+
+  <!-- ================= 06 SCENE ================= -->
+  <article class="cs-case" id="scene">
+    <div class="cs-case-head"><span class="num">06</span><h3>씬 흐름 · 캐릭터 선택 — 씬이 바뀌어도 끊기지 않게</h3><p>메인 메뉴 → 튜토리얼 → 캐릭터 선택 → 챕터 1로 이어지는 씬을 나누고, 씬이 바뀌어도 직업 · 진행 데이터가 끊기지 않도록 구성했습니다.</p></div>
+
+    <div class="cs-body">
+      <figure style="margin:0"><div class="cs-media"><video class="cs-clip" width="960" height="540" muted loop playsinline preload="none" poster="../media/projects/belladorn/clips/scene_flow.jpg" data-src="../media/projects/belladorn/clips/scene_flow.mp4" aria-label="유물 컷신 후 영웅 선택 화면으로 넘어가는 장면"></video></div><figcaption>유물 컷신 → 영웅 선택 화면으로 전환</figcaption></figure>
+      <div class="cs-block"><span class="cs-label">설계</span><ul class="cs-list">
+        <li><strong>컷신 전환</strong> — 튜토리얼 마지막 퀘스트를 완료하고 유물과의 대화가 끝나면 화면을 페이드아웃하고 내레이션을 순서대로 띄운 뒤, [G] 입력 시 캐릭터 선택 씬으로 이동</li>
+        <li><strong>캐릭터 선택</strong> — 직업마다 카메라 포인트로 이동하며 직업 설명 · 난이도(1 ~ 5) · 추천 대상 · 플레이 스타일 표시 → 확정 시 선택 직업을 <code class="k">JobManager</code>에 저장하고 게임 씬 로드</li>
+        <li><strong>데이터 유지</strong> — 직업 정보를 가진 매니저를 씬 사이에서 유지하고, 새 씬이 로드되면 플레이어와 UI 참조를 다시 연결</li>
+      </ul></div>
+    </div>
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/GameSystem/ScreenTransitionController.cs" target="_blank" rel="noopener noreferrer">ScreenTransitionController.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/GameSystem/CharacterSelectionUI.cs" target="_blank" rel="noopener noreferrer">CharacterSelectionUI.cs</a><a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio/blob/main/Assets/Scripts/GameSystem/CharacterSelectCameraController.cs" target="_blank" rel="noopener noreferrer">CharacterSelectCameraController.cs</a></div>
+
+    <p class="cs-note" style="margin-top:28px">적 · 보스 AI와 공격 패턴, 이동 · 입력 · 카메라, 맵은 팀원이 담당했습니다. 공개 저장소에서는 유료 에셋과 애니메이션 클립을 제외했습니다.</p>
+  </article>
+</section>
+
+<!-- ================= RESOURCES ================= -->
+<section class="cs-section" id="resources">
+  <p class="eyebrow">TAKE A CLOSER LOOK</p>
+  <h2>영상과 프로젝트 자료</h2>
+  <p class="cs-text" style="margin-top:12px">2025학년도 1학기 캡스톤디자인 플레이 영상입니다. 썸네일을 누르면 재생됩니다.</p>
+  <div style="margin-top:22px"><button class="cs-yt" type="button" data-id="UThz7KhKTDc" style="--thumb:url('https://i.ytimg.com/vi/UThz7KhKTDc/maxresdefault.jpg')" aria-label="Belladorn 플레이 영상 재생"><span class="play" aria-hidden="true"></span><span class="label">Belladorn — 캡스톤디자인 플레이 영상 (YouTube)</span></button></div>
+  <div class="cs-resources">
+    <a href="https://github.com/chlwnsdud2025/Capstone-project-Portfolio" target="_blank" rel="noopener noreferrer"><small>SOURCE CODE</small><strong>GitHub 저장소 ↗</strong><span>담당 코드와 README 정리</span></a>
+    <a href="https://www.youtube.com/watch?v=UThz7KhKTDc" target="_blank" rel="noopener noreferrer"><small>VIDEO</small><strong>YouTube에서 보기 ↗</strong><span>캡스톤디자인 플레이 영상</span></a>
+    <a href="https://www.canva.com/d/mzu8Fvwvj8IVG7d" target="_blank" rel="noopener noreferrer"><small>PORTFOLIO</small><strong>Canva 포트폴리오 ↗</strong><span>전체 프로젝트 포트폴리오 문서</span></a>
+  </div>
+</section>
+
+</div></div>
+<a class="next-project" href="pixel-chroma.html"><div class="shell"><span>NEXT PROJECT</span><h2>Pixel Chroma</h2><span class="next-arrow" aria-hidden="true">↗</span></div></a>
+</main>
+<footer class="footer"><div class="shell footer-inner"><a class="brand" href="../index.html">CJY<span>.</span></a><span>© 2026 최준영 · Unity Client Developer</span><a href="../index.html">포트폴리오 홈 <span aria-hidden="true">↑</span></a></div></footer>
+</body>
+</html>

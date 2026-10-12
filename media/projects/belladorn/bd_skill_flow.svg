@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="t d">
+<title id="t">Belladorn 직업 · 스킬 · 히트박스 흐름</title>
+<desc id="d">직업 변경 시 모델, 애니메이터, 스킬 세트, 스탯이 데이터로 교체되고, QWER 입력이 스킬 애니메이션과 애니메이션 이벤트를 거쳐 히트박스 프리팹으로 판정되는 흐름도</desc>
+<defs>
+  <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#3B6FD8"/></marker>
+  <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#E08A2E"/></marker>
+  <style>
+    text{font-family:Pretendard,'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .crumb{font-size:22px;font-weight:600;fill:#3B6FD8}
+    .h1{font-size:42px;font-weight:800;fill:#1F2A44;letter-spacing:-1px}
+    .sub{font-size:21px;fill:#7A8296}
+    .panel{fill:#FFFFFF;stroke:#E1E3EA;stroke-width:2}
+    .ptitle{font-size:22px;font-weight:700;fill:#1F2A44}
+    .pnote{font-size:16px;fill:#8A93A6}
+    .box{fill:#FFFFFF;stroke:#C9CFDB;stroke-width:2}
+    .blue{fill:#EEF3FD;stroke:#3B6FD8;stroke-width:2.5}
+    .orange{fill:#FFF5EA;stroke:#E08A2E;stroke-width:2.5}
+    .green{fill:#EAF6F1;stroke:#1E9E7A;stroke-width:2.5}
+    .bt{font-size:19px;font-weight:800;fill:#1F2A44}
+    .bd{font-size:15.5px;fill:#5B6478}
+    .tag{font-size:13px;font-weight:700;fill:#3B6FD8}
+    .chip{fill:#1F2A44}
+    .chipt{font-size:16px;font-weight:700;fill:#FFFFFF}
+    .num{font-size:15px;font-weight:800;fill:#FFFFFF}
+  </style>
+</defs>
+<rect width="1600" height="900" fill="#F4F3EE"/>
+
+<text x="64" y="72" class="crumb">Belladorn  /  직업 · 스킬 · 전투 판정</text>
+<text x="64" y="128" class="h1">데이터만 바꾸면 직업과 스킬이 통째로 교체됩니다</text>
+<text x="64" y="166" class="sub">JobManager · JobSkillData / JobStatusData (ScriptableObject) · PlayerSkillController · Hitbox 프리팹</text>
+
+<!-- ===== Panel 1: Job change ===== -->
+<rect x="48" y="200" width="480" height="652" rx="20" class="panel"/>
+<circle cx="90" cy="238" r="16" fill="#3B6FD8"/><text x="90" y="244" class="num" text-anchor="middle">1</text>
+<text x="116" y="245" class="ptitle">직업 변경 — ChangeJob()</text>
+
+<rect x="76" y="276" width="424" height="40" rx="20" class="chip"/>
+<text x="288" y="302" class="chipt" text-anchor="middle">캐릭터 선택 · 전직 → JobType 하나만 전달</text>
+<line x1="288" y1="318" x2="288" y2="342" stroke="#3B6FD8" stroke-width="2.5" marker-end="url(#ab)"/>
+
+<rect x="76" y="346" width="424" height="84" rx="14" class="blue"/>
+<text x="96" y="374" class="tag">JobResources</text>
+<text x="96" y="398" class="bt">모델 프리팹 · Animator 교체</text>
+<text x="96" y="420" class="bd">Animator Controller + Avatar를 직업별로 교체</text>
+
+<rect x="76" y="442" width="424" height="84" rx="14" class="blue"/>
+<text x="96" y="470" class="tag">JobSkillData (SO)</text>
+<text x="96" y="494" class="bt">직업 전용 스킬 세트 로드</text>
+<text x="96" y="516" class="bd">히트박스 · 이펙트 · 쿨타임 · 마나 · 애니메이션</text>
+
+<rect x="76" y="538" width="424" height="84" rx="14" class="blue"/>
+<text x="96" y="566" class="tag">JobStatusData (SO)</text>
+<text x="96" y="590" class="bt">기본 스탯 · 레벨당 성장치 적용</text>
+<text x="96" y="612" class="bd">HP · MP · 공격 · 방어 · 치명타 / 레벨업 시 증가량</text>
+
+<rect x="76" y="634" width="424" height="84" rx="14" class="green"/>
+<text x="96" y="662" class="tag" style="fill:#1E9E7A">OnJobChanged 이벤트</text>
+<text x="96" y="686" class="bt">UI는 이벤트를 구독해 갱신</text>
+<text x="96" y="708" class="bd">캐릭터 프리뷰 · 스킬 UI가 직업을 몰라도 됨</text>
+
+<text x="76" y="760" class="pnote">JobManager는 DontDestroyOnLoad 싱글턴으로,</text>
+<text x="76" y="784" class="pnote">씬이 로드되면 플레이어를 다시 찾아 현재 직업을</text>
+<text x="76" y="808" class="pnote">재적용합니다 (씬 전환 후에도 직업 유지).</text>
+
+<!-- ===== Panel 2: Skill execution ===== -->
+<rect x="556" y="200" width="488" height="652" rx="20" class="panel"/>
+<circle cx="598" cy="238" r="16" fill="#E08A2E"/><text x="598" y="244" class="num" text-anchor="middle">2</text>
+<text x="624" y="245" class="ptitle">스킬 실행 — QWER 입력</text>
+
+<rect x="584" y="276" width="432" height="40" rx="20" class="chip"/>
+<text x="800" y="302" class="chipt" text-anchor="middle">Q · W · E · R 입력 (+ 마우스 위치)</text>
+<line x1="800" y1="318" x2="800" y2="342" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+
+<rect x="584" y="346" width="432" height="84" rx="14" class="orange"/>
+<text x="604" y="374" class="tag" style="fill:#E08A2E">SkillEquipManager</text>
+<text x="604" y="398" class="bt">슬롯 키 → 장착된 SkillInfo</text>
+<text x="604" y="420" class="bd">강화된 스킬이면 강화 버전이 그대로 실행</text>
+<line x1="800" y1="432" x2="800" y2="456" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+
+<rect x="584" y="460" width="432" height="84" rx="14" class="orange"/>
+<text x="604" y="488" class="tag" style="fill:#E08A2E">PlayerSkillController</text>
+<text x="604" y="512" class="bt">이동 정지 · 마우스 방향 회전</text>
+<text x="604" y="534" class="bd">스킬 애니메이션 재생 (Root Motion 적용)</text>
+<line x1="800" y1="546" x2="800" y2="570" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+
+<rect x="584" y="574" width="432" height="128" rx="14" class="orange"/>
+<text x="604" y="602" class="tag" style="fill:#E08A2E">Animation Event</text>
+<text x="604" y="626" class="bt">모션의 타격 프레임에서 호출</text>
+<text x="604" y="652" class="bd">ActivateHitbox — 히트박스 프리팹 생성</text>
+<text x="604" y="674" class="bd">SpawnEffect — 이펙트 생성 · 지속 시간 후 제거</text>
+<text x="604" y="696" class="bd">PlaySkillSound — 효과음 1 · 2 타이밍 분리</text>
+
+<text x="584" y="760" class="pnote">판정 타이밍을 코드가 아니라 애니메이션 클립에서</text>
+<text x="584" y="784" class="pnote">조절하므로, 모션을 바꿔도 타격 시점이 어긋나지</text>
+<text x="584" y="808" class="pnote">않습니다.</text>
+
+
+<!-- ===== Panel 3: Hitbox ===== -->
+<rect x="1072" y="200" width="480" height="652" rx="20" class="panel"/>
+<circle cx="1114" cy="238" r="16" fill="#1E9E7A"/><text x="1114" y="244" class="num" text-anchor="middle">3</text>
+<text x="1140" y="245" class="ptitle">히트박스 판정 — 프리팹 설정만으로</text>
+
+<rect x="1100" y="276" width="424" height="76" rx="14" class="box"/>
+<text x="1120" y="304" class="bt">범위 Shape</text>
+<text x="1120" y="330" class="bd">Sphere · Box · Cone (각도 · 거리)</text>
+
+<rect x="1100" y="364" width="424" height="76" rx="14" class="box"/>
+<text x="1120" y="392" class="bt">다단 히트</text>
+<text x="1120" y="418" class="bd">startDelay · repeatCount · repeatInterval</text>
+
+<rect x="1100" y="452" width="424" height="76" rx="14" class="box"/>
+<text x="1120" y="480" class="bt">투사체 + 2차 폭발</text>
+<text x="1120" y="506" class="bd">충돌 시 secondaryHitbox 프리팹을 이어서 생성</text>
+
+<rect x="1100" y="540" width="424" height="76" rx="14" class="box"/>
+<text x="1120" y="568" class="bt">위치 기준</text>
+<text x="1120" y="594" class="bd">시전자 따라가기 · 마우스 지점 고정</text>
+
+<line x1="1312" y1="618" x2="1312" y2="642" stroke="#1E9E7A" stroke-width="2.5" marker-end="url(#ab)" style="stroke:#1E9E7A"/>
+<rect x="1100" y="646" width="424" height="84" rx="14" class="green"/>
+<text x="1120" y="674" class="tag" style="fill:#1E9E7A">피아 구분</text>
+<text x="1120" y="698" class="bt">태그 + 레이어 마스크로 대상 필터</text>
+<text x="1120" y="720" class="bd">PlayerHitbox → 적 · 보스 / EnemyHitbox → 플레이어</text>
+
+<text x="1100" y="772" class="pnote">맞은 대상은 CharacterStatus.TakeDamage()로</text>
+<text x="1100" y="796" class="pnote">처리해, 공격 판정과 피격 처리를 분리했습니다.</text>
+<line x1="530" y1="296" x2="552" y2="296" stroke="#3B6FD8" stroke-width="3" marker-end="url(#ab)"/>
+<line x1="1046" y1="638" x2="1068" y2="638" stroke="#E08A2E" stroke-width="3" marker-end="url(#ao)"/>
+</svg>

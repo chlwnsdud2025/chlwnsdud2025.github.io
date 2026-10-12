@@ -1,3 +1,427 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#071f28"><meta name="description" content="쏟아지는 몬스터를 처치하며 무기와 패시브를 강화하고, 여섯 장애물 구간과 보스를 넘어 최종 보스에 도전하는 3D 서바이벌 액션입니다."><title>우당탕 방범대 · 최준영</title><link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="../project-detail.css?v=20261012"><script src="../project-detail.js?v=20261012" defer></script></head><body id="top" class="detail-page" style="--project-accent:#ffc16e"><a class="skip-link" href="#main">본문으로 바로가기</a><header class="site-header"><div class="shell header-inner"><a class="brand" href="../index.html" aria-label="최준영 포트폴리오 홈">CJY<span>.</span></a><button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button><nav id="site-nav" aria-label="주 메뉴"><a href="../index.html#projects">Projects</a><a href="../index.html#about">About</a><a href="../index.html#contact">Contact</a><a class="nav-external" href="https://github.com/chlwnsdud2025" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></nav></div></header><main id="main"><section class="detail-hero"><div class="shell"><div class="breadcrumb"><a href="../index.html#projects">PROJECTS</a><span>/</span><span>우당탕 방범대</span></div><div class="detail-hero-heading"><div><p class="eyebrow">PROJECT CASE STUDY</p><h1>우당탕 방범대</h1><p>3D 뱀서라이크 액션</p></div><a class="button button-outline" href="#implementation">구현 사례 보기 <span aria-hidden="true">↓</span></a></div><div class="video-player "><video autoplay muted loop playsinline controls preload="metadata" poster="../media/projects/patrol/poster.webp" aria-label="우당탕 방범대 24초 플레이 트레일러"><source src="../media/projects/patrol/trailer.mp4" type="video/mp4"></video><p class="video-fallback" hidden>영상을 불러오지 못했습니다. <a href="../media/projects/patrol/trailer.mp4">영상 파일 열기</a></p></div><div class="project-facts"><div><span>PERIOD</span><strong>2026.05.04 — 2026.05.29</strong></div><div><span>TEAM</span><strong>4인 팀 프로젝트</strong></div><div><span>MY ROLE</span><strong>Enemy · Boss · 맵 · 인게임 흐름</strong></div><div><span>PLATFORM</span><strong>PC</strong></div></div></div></section>
-<div class="shell detail-layout"><aside class="detail-toc"><span>IN THIS PROJECT</span><nav aria-label="프로젝트 목차"><a href="#overview">프로젝트 소개</a><a href="#implementation">구현 사례</a><a href="#gallery">플레이 장면</a><a href="#resources">영상 · 자료</a></nav><a class="toc-home" href="../index.html#projects">← 다른 프로젝트</a></aside><div class="detail-body"><section class="overview" id="overview"><p class="eyebrow">THE PROJECT</p><h2>쏟아지는 몬스터, 무너지지 않는 프레임</h2><p class="overview-lead">쏟아지는 몬스터를 처치하며 무기와 패시브를 강화하고, 여섯 장애물 구간과 보스를 넘어 최종 보스에 도전하는 3D 서바이벌 액션입니다.</p><div class="overview-role"><span>담당한 일</span><p>Enemy · Boss · 맵 · 인게임 흐름</p></div><div class="tags"><span>Unity 6</span><span>C#</span><span>URP</span><span>Object Pooling</span><span>GPU Instancing</span><span>Spatial Grid</span><span>ScriptableObject</span></div></section><section id="implementation" class="implementation"><div class="detail-section-title"><p class="eyebrow">ENGINEERING NOTES</p><h2>문제에서 구현까지</h2></div><article class="case-study" id="case-1"><div class="case-heading"><span class="case-number">01</span><h3>Profiler로 병목을 찾고 단계적으로 최적화</h3></div><div class="case-grid"><div class="case-copy"><div><span class="small-heading">문제</span><p>대량의 Enemy에서 개별 Update 호출, 반복 생성·파괴, Animator 갱신, 전체 적을 순회하는 분리 계산 비용이 누적됐습니다.</p></div><div><span class="small-heading">구현</span><p>EnemyManager의 ManagedUpdate로 갱신을 모으고 Enemy·데미지 텍스트·코인·경험치를 풀링했습니다. SmartVAT로 애니메이션을 텍스처로 베이크해 GPU에서 재생하고 동일 Mesh·Material을 인스턴싱합니다. 2m Grid에서 주변 셀의 후보를 최대 32개 검사하고 조건에 맞는 가까운 이웃으로 분리 계산을 제한합니다.</p></div><div class="case-result"><span class="small-heading">결과</span><p>포트폴리오에 기록한 Unity Editor 측정에서 Separation 중앙값 187.07ms → 4.06ms, 프레임 중앙값 219.25ms → 17.33ms로 감소했습니다. VAT 측정은 별도 조건에서 Animator 2.67ms → 0.07ms로 감소했습니다.</p></div><details class="code-sources"><summary>관련 코드 보기 <span>+</span></summary><div><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/EnemyManager.cs" target="_blank" rel="noopener noreferrer">EnemyManager.cs ↗</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy.cs" target="_blank" rel="noopener noreferrer">Enemy.cs ↗</a></div></details></div><div class="case-visual"><div class="benchmark diagram-panel"><span class="diagram-label">RECORDED PROFILER COMPARISON</span><div class="bench-row"><div><strong>Separation</strong><span>−97.8%</span></div><div class="bench-bar before" style="--bar-width:100%"><span>187.07 ms</span></div><div class="bench-bar after" style="--bar-width:4.0%"><span>4.06 ms</span></div></div><div class="bench-row"><div><strong>Frame · Grid 비교</strong><span>−92.1%</span></div><div class="bench-bar before" style="--bar-width:100%"><span>219.25 ms</span></div><div class="bench-bar after" style="--bar-width:7.9%"><span>17.33 ms</span></div></div><div class="bench-row"><div><strong>Animator · VAT 비교</strong><span>−97.4%</span></div><div class="bench-bar before" style="--bar-width:100%"><span>2.67 ms</span></div><div class="bench-bar after" style="--bar-width:4.0%"><span>0.07 ms</span></div></div><div class="bench-legend"><span><i></i>변경 전</span><span><i></i>변경 후</span></div></div><p class="measurement-note"><strong>측정 조건</strong>Grid: Unity 6 Editor · 적 약916/969마리 · 371/2000프레임 중앙값 · i5-12400F · 셀2m · 반경1.5m · 후보32. VAT: 적약1000 · 1195/1160프레임 중앙값 · 카메라1대 · 텍스트·코인·경험치OFF · i5-12400F / RTX3060.</p></div></div></article><article class="case-study" id="case-2"><div class="case-heading"><span class="case-number">02</span><h3>NavMesh 없이 다층 지형 추적</h3></div><div class="case-grid"><div class="case-copy"><div><span class="small-heading">문제</span><p>적이 플레이어와 다른 층에 있거나 계단·단차를 만났을 때 XZ 추적만으로는 지면 높이를 맞출 수 없었습니다.</p></div><div><span class="small-heading">구현</span><p>플레이어를 향한 수평 이동과 Y 보정을 분리했습니다. 기본 Low Raycast로 같은 층 지면을 찾고, 지면을 놓치거나 플레이어가 더 높은 경우 High Raycast 후보에서 목표 높이에 가까운 지면을 선택합니다.</p></div><div class="case-result"><span class="small-heading">결과</span><p>작은 단차는 빠르게, 큰 단차는 수평 이동을 멈추고 천천히 올라가며, 아래층으로는 낙하하도록 상황별 이동을 구현했습니다.</p></div><details class="code-sources"><summary>관련 코드 보기 <span>+</span></summary><div><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy.cs" target="_blank" rel="noopener noreferrer">Enemy.cs ↗</a></div></details></div><div class="case-visual"><div class="flow-diagram"><span class="diagram-label">GROUND TRACKING</span><ol><li><span>01</span><strong>플레이어 XZ 추적</strong></li><li><span>02</span><strong>Low Raycast 지면 검사</strong></li><li><span>03</span><strong>필요 시 High Raycast</strong></li><li><span>04</span><strong>단차별 Y 보정</strong></li></ol></div></div></div></article><article class="case-study" id="case-3"><div class="case-heading"><span class="case-number">03</span><h3>일반 적과 보스의 확장 구조</h3></div><div class="case-grid"><div class="case-copy"><div><span class="small-heading">문제</span><p>일반 적의 대량 처리와 보스의 개별 복합 패턴은 서로 다른 갱신·생명주기를 필요로 했습니다.</p></div><div><span class="small-heading">구현</span><p>Enemy와 BossEnemy를 별도 베이스 클래스로 두고 IDamageable 피해 인터페이스를 공유합니다. 일반 적은 중앙 갱신과 풀링을 따르고, 보스는 개별 Update·Coroutine·공격 패턴·사망 이벤트를 사용합니다.</p></div><div class="case-result"><span class="small-heading">결과</span><p>공통 피해 처리와 타입별 행동을 분리해 일반 적 6종과 보스 9종의 동작을 확장했습니다.</p></div><details class="code-sources"><summary>관련 코드 보기 <span>+</span></summary><div><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy.cs" target="_blank" rel="noopener noreferrer">Enemy.cs ↗</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Boss/BossEnemy.cs" target="_blank" rel="noopener noreferrer">BossEnemy.cs ↗</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Boss/BossType/FinalBoss.cs" target="_blank" rel="noopener noreferrer">FinalBoss.cs ↗</a></div></details></div><div class="case-visual"><div class="class-diagram diagram-panel"><span class="diagram-label">SHARED DAMAGE / SEPARATE LIFECYCLE</span><div class="interface">IDamageable</div><div class="class-branches"><div><strong>Enemy</strong><p>ManagedUpdate<br>Object Pooling<br>Spatial Grid</p></div><div><strong>BossEnemy</strong><p>Update / Coroutine<br>개별 공격 패턴<br>사망 이벤트</p></div></div></div></div></div></article><article class="case-study" id="case-4"><div class="case-heading"><span class="case-number">04</span><h3>데이터로 구성한 웨이브와 페이즈 흐름</h3></div><div class="case-grid"><div class="case-copy"><div><span class="small-heading">문제</span><p>웨이브·장애물 클리어·중간 보스·최종 보스 전환을 팀원이 조정하기 쉽게 구성해야 했습니다.</p></div><div><span class="small-heading">구현</span><p>Theme → Phase → Wave → Enemy ScriptableObject로 일정과 적 구성을 나눴습니다. 스케줄 커스텀 인스펙터에 페이즈 막대, 정상·Nightmare 타임라인, 웨이브 표와 에셋 이동 기능을 제공합니다.</p></div><div class="case-result"><span class="small-heading">결과</span><p>여섯 번의 웨이브 → 맵 클리어 → 보스 반복 뒤 포털로 최종 페이즈에 진입합니다. 제한 시간 초과 시 별도 악몽 타이머와 웨이브를 시작해 후반 압박을 설계했습니다.</p></div><details class="code-sources"><summary>관련 코드 보기 <span>+</span></summary><div><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy_Game_Data/new/StageRunManager.cs" target="_blank" rel="noopener noreferrer">StageRunManager.cs ↗</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy_Game_Data/new/StageTheme_SO.cs" target="_blank" rel="noopener noreferrer">StageTheme_SO.cs ↗</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy_Game_Data/new/StagePhase_SO.cs" target="_blank" rel="noopener noreferrer">StagePhase_SO.cs ↗</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/Editor/StageScheduleDebugViewEditor.cs" target="_blank" rel="noopener noreferrer">StageScheduleDebugViewEditor.cs ↗</a></div></details></div><div class="case-visual"><div class="flow-diagram"><span class="diagram-label">DATA-DRIVEN GAME FLOW</span><ol><li><span>01</span><strong>Theme</strong></li><li><span>02</span><strong>Phase</strong></li><li><span>03</span><strong>Wave</strong></li><li><span>04</span><strong>장애물 · 중간 보스 · 최종 보스</strong></li></ol></div></div></div></article></section><section class="detail-gallery" id="gallery"><div class="detail-section-title"><p class="eyebrow">PLAY IN FOCUS</p><h2>실제 플레이 장면</h2></div><div class="gallery-grid"><figure><a href="../media/projects/patrol/shot-01.webp" target="_blank" rel="noopener noreferrer" aria-label="대량의 적을 처치하는 전투 이미지 크게 보기"><img src="../media/projects/patrol/shot-01.webp" width="1600" height="900" loading="lazy" alt="대량의 적을 처치하는 전투"></a><figcaption><span>01</span>대량의 적을 처치하는 전투</figcaption></figure><figure><a href="../media/projects/patrol/shot-02.webp" target="_blank" rel="noopener noreferrer" aria-label="장애물 구간 돌파 이미지 크게 보기"><img src="../media/projects/patrol/shot-02.webp" width="1600" height="900" loading="lazy" alt="장애물 구간 돌파"></a><figcaption><span>02</span>장애물 구간 돌파</figcaption></figure><figure><a href="../media/projects/patrol/shot-03.webp" target="_blank" rel="noopener noreferrer" aria-label="거미 보스와의 전투 이미지 크게 보기"><img src="../media/projects/patrol/shot-03.webp" width="1600" height="900" loading="lazy" alt="거미 보스와의 전투"></a><figcaption><span>03</span>거미 보스와의 전투</figcaption></figure><figure><a href="../media/projects/patrol/shot-04.webp" target="_blank" rel="noopener noreferrer" aria-label="최종 보스의 광역 공격 이미지 크게 보기"><img src="../media/projects/patrol/shot-04.webp" width="1600" height="900" loading="lazy" alt="최종 보스의 광역 공격"></a><figcaption><span>04</span>최종 보스의 광역 공격</figcaption></figure></div></section><section class="resources" id="resources"><div class="detail-section-title"><p class="eyebrow">TAKE A CLOSER LOOK</p><h2>영상과 프로젝트 자료</h2></div><div class="resource-list"><a class="resource-link" href="https://www.canva.com/d/mzu8Fvwvj8IVG7d" target="_blank" rel="noopener noreferrer"><span><small>PORTFOLIO</small>원본 프로젝트 포트폴리오</span><b aria-hidden="true">↗</b></a><a class="resource-link" href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio" target="_blank" rel="noopener noreferrer"><span><small>SOURCE CODE</small>GitHub 저장소</span><b aria-hidden="true">↗</b></a><a class="resource-link" href="https://www.youtube.com/watch?v=qPuH5ze9sbI" target="_blank" rel="noopener noreferrer"><span><small>VIDEO</small>포트폴리오 영상 (YouTube)</span><b aria-hidden="true">↗</b></a></div><div class="full-video"><h3>구현 설명 영상</h3><p>플레이와 기술 설명을 함께 정리한 전체 포트폴리오 영상입니다.</p><div class="video-player compact-player"><video  muted loop playsinline controls preload="none" poster="../media/projects/patrol/poster.webp" aria-label="우당탕 방범대 전체 포트폴리오 영상"><source src="../media/projects/patrol/portfolio.mp4" type="video/mp4"></video><p class="video-fallback" hidden>영상을 불러오지 못했습니다. <a href="../media/projects/patrol/portfolio.mp4">영상 파일 열기</a></p></div></div></section></div></div><a class="next-project" href="last-ember.html"><div class="shell"><span>NEXT PROJECT</span><h2>Last Ember</h2><span class="next-arrow" aria-hidden="true">↗</span></div></a></main><footer class="footer"><div class="shell footer-inner"><a class="brand" href="../index.html">CJY<span>.</span></a><span>© 2026 최준영 · Unity Client Developer</span><a href="../index.html">포트폴리오 홈 <span aria-hidden="true">↑</span></a></div></footer></body></html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#071f28">
+<meta name="description" content="몰려드는 몬스터 웨이브와 장애물 스테이지, 보스를 돌파하는 3D 뱀서라이크. 적 1,000마리 환경의 대량 Enemy 최적화, NavMesh 없는 다층 지형 추적, Enemy·Boss 구조, SO 기반 인게임 흐름 구현 사례.">
+<title>우당탕 방범대 · 최준영</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../project-detail.css?v=2026101202">
+<link rel="stylesheet" href="../project-case.css?v=2026101202">
+<script src="../project-detail.js?v=2026101202" defer></script>
+</head>
+<body id="top" class="detail-page case-page" style="--project-accent:#ffc16e">
+<a class="skip-link" href="#main">본문으로 바로가기</a>
+<header class="site-header"><div class="shell header-inner"><a class="brand" href="../index.html" aria-label="최준영 포트폴리오 홈">CJY<span>.</span></a><button class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button><nav id="site-nav" aria-label="주 메뉴"><a href="../index.html#projects">Projects</a><a href="../index.html#about">About</a><a href="../index.html#contact">Contact</a><a class="nav-external" href="https://github.com/chlwnsdud2025" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></nav></div></header>
+
+<main id="main">
+<section class="detail-hero"><div class="shell">
+  <div class="breadcrumb"><a href="../index.html#projects">PROJECTS</a><span>/</span><span>우당탕 방범대</span></div>
+  <div class="detail-hero-heading">
+    <div>
+      <p class="eyebrow">PROJECT CASE STUDY · OPTIMIZATION</p>
+      <h1>우당탕 방범대</h1>
+      <p class="cs-tagline">몰려드는 몬스터 웨이브 속에서 살아남으며 무기와 패시브를 강화하고, 장애물 스테이지와 보스를 돌파하는 <b>3D 뱀서라이크</b>입니다. 저는 수백 마리의 적이 프레임 저하 없이 움직이도록 만드는 Enemy · Boss 시스템과, 한 판의 런을 이루는 인게임 흐름을 맡았습니다.</p>
+      <div class="cs-hero-actions">
+        <a class="primary" href="https://www.youtube.com/watch?v=qPuH5ze9sbI" target="_blank" rel="noopener noreferrer">포트폴리오 영상 <span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio" target="_blank" rel="noopener noreferrer">GitHub 코드 <span aria-hidden="true">↗</span></a>
+        <a href="https://www.canva.com/d/mzu8Fvwvj8IVG7d" target="_blank" rel="noopener noreferrer">Canva 포트폴리오 <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <a class="button button-outline" href="#optimization">구현 사례 보기 <span aria-hidden="true">↓</span></a>
+  </div>
+  <div class="video-player"><video autoplay muted loop playsinline controls preload="metadata" poster="../media/projects/patrol/poster.webp" aria-label="우당탕 방범대 24초 플레이 트레일러"><source src="../media/projects/patrol/trailer.mp4" type="video/mp4"></video><p class="video-fallback" hidden>영상을 불러오지 못했습니다. <a href="../media/projects/patrol/trailer.mp4">영상 파일 열기</a></p></div>
+  <div class="project-facts">
+    <div><span>PERIOD</span><strong>2026.05.04 — 2026.05.29 (약 4주)</strong></div>
+    <div><span>TEAM</span><strong>4인 팀 프로젝트</strong></div>
+    <div><span>MY ROLE</span><strong>개발 · Enemy · Boss · 맵 · 인게임 흐름 · 대량 Enemy 최적화</strong></div>
+    <div><span>ENGINE / PLATFORM</span><strong>Unity 6 (6000.4.5f1) · PC</strong></div>
+  </div>
+</div></section>
+
+<div class="shell detail-layout">
+<aside class="detail-toc"><span>IN THIS PROJECT</span><nav aria-label="프로젝트 목차">
+  <a href="#overview">프로젝트 개요</a>
+  <a href="#game">게임 소개</a>
+  <a href="#optimization">01 대량 Enemy 최적화</a>
+  <a href="#multilayer">02 다층 지형 추적</a>
+  <a href="#structure">03 Enemy · Boss 구조</a>
+  <a href="#flow">04 인게임 흐름</a>
+  <a href="#retro">배운 점</a>
+  <a href="#resources">영상 · 자료</a>
+</nav><a class="toc-home" href="../index.html#projects">← 다른 프로젝트</a></aside>
+
+<div class="detail-body">
+
+<!-- ================= OVERVIEW ================= -->
+<section class="cs-section" id="overview">
+  <p class="eyebrow">PROJECT OVERVIEW</p>
+  <h2>3D 인게임에서 수백 마리의 몬스터를, 프레임 저하 없이</h2>
+  <p class="cs-lead">뱀서라이크 장르의 재미는 화면을 가득 채운 적을 한꺼번에 쓸어버리는 데서 나옵니다. 하지만 3D에서 적이 수백 마리를 넘어가면 개별 <code class="k">Update</code>, 생성 · 파괴, Animator, 적끼리의 겹침 처리 비용이 한꺼번에 프레임을 끌어내립니다.</p>
+  <p class="cs-lead">4인 팀으로 4주 동안 개발하면서 저는 Enemy · Boss · 맵 · 인게임 흐름을 맡았습니다. <strong>Profiler로 병목을 찾고, 같은 조건에서 전후를 비교하며</strong> 단계적으로 최적화했고, 웨이브부터 최종 보스까지 이어지는 런 구조를 팀원이 코드 수정 없이 조정할 수 있는 데이터로 설계했습니다.</p>
+
+  <div class="cs-stats">
+    <div class="cs-stat"><b>≈1,000<small>마리</small></b><span>측정 기준 동시 활성 적 수</span></div>
+    <div class="cs-stat"><b>−97.8<small>%</small></b><span>적 분리 계산 187.07 → 4.06ms (Grid 공간 분할)</span></div>
+    <div class="cs-stat"><b>−97.4<small>%</small></b><span>Animator 갱신 2.67 → 0.07ms (VAT + GPU Instancing)</span></div>
+    <div class="cs-stat"><b>748<small>→30</small></b><span>적 748 인스턴스를 30 드로우로</span></div>
+    <div class="cs-stat"><b>6 + 9<small>종</small></b><span>일반 Enemy 6종 · 보스 9종</span></div>
+  </div>
+
+  <div class="cs-role">
+    <div>
+      <h3>내가 맡은 일</h3>
+      <ul class="cs-list">
+        <li><strong>대량 Enemy 최적화</strong> — ManagedUpdate · 오브젝트 풀링 · VAT + GPU Instancing · Grid 공간 분할</li>
+        <li><strong>다층 지형 추적</strong> — NavMesh 없이 플레이어 XZ 추적 + 단차별 Low / High Raycast로 지면 Y 보정</li>
+        <li><strong>Enemy · Boss 구조</strong> — <code class="k">IDamageable</code> 공통 계약, 일반 6종 / 보스 9종 확장</li>
+        <li><strong>맵 · 인게임 흐름</strong> — 웨이브 페이즈 → 장애물 스테이지 → 중간 보스 × 6 → 최종 보스, ScriptableObject와 커스텀 인스펙터</li>
+      </ul>
+    </div>
+    <div>
+      <h3>프로젝트 정보</h3>
+      <ul class="cs-list">
+        <li><strong>장르</strong> — 3D 뱀서라이크 + 장애물 액션</li>
+        <li><strong>개발 기간</strong> — 2026.05.04 – 2026.05.29 (약 4주) · 4인 팀</li>
+        <li><strong>개발 환경</strong> — Unity 6 (6000.4.5f1), C#, URP</li>
+        <li><strong>측정 도구</strong> — Unity Profiler, Profile Analyzer, Frame Debugger</li>
+        <li><strong>목표</strong> — 수백 마리의 몬스터를 프레임 저하 없이 움직이고, 하나의 런으로 연결하자</li>
+      </ul>
+    </div>
+  </div>
+  <div class="cs-tags"><span>Unity 6</span><span>C#</span><span>URP</span><span>Object Pooling</span><span>SmartVAT</span><span>GPU Instancing</span><span>Spatial Grid</span><span>ScriptableObject</span><span>Custom Inspector</span><span>Profile Analyzer</span></div>
+</section>
+
+<!-- ================= GAME ================= -->
+<section class="cs-section" id="game">
+  <p class="eyebrow">THE GAME</p>
+  <h2>쏟아지는 몬스터를 쓸어 담고, 장애물과 보스를 넘어</h2>
+  <p class="cs-lead">캐릭터를 골라 시작하면 사방에서 몬스터 웨이브가 몰려옵니다. 자동 · 획득 무기로 적을 처치하고, 떨어진 경험치로 레벨업할 때마다 무기와 패시브를 골라 강해집니다. 페이즈를 버티고 나면 회전 발판과 이동 장애물로 가득한 장애물 스테이지, 그리고 보스가 기다립니다.</p>
+
+  <div class="cs-grid">
+    <figure>
+      <div class="cs-media"><video class="cs-clip" width="480" height="270" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/horde_combat.jpg" data-src="../media/projects/patrol/clips/horde_combat.mp4" aria-label="몰려드는 몬스터를 다양한 무기로 한 번에 처치하는 장면"></video></div>
+      <figcaption>몰려드는 몬스터를 다양한 무기로 한 번에 처치</figcaption>
+    </figure>
+    <figure>
+      <div class="cs-media"><video class="cs-clip" width="480" height="270" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/final_boss.jpg" data-src="../media/projects/patrol/clips/final_boss.mp4" aria-label="최종 보스전"></video></div>
+      <figcaption>여섯 페이즈를 넘긴 뒤 만나는 최종 보스</figcaption>
+    </figure>
+    <figure>
+      <div class="cs-media"><video class="cs-clip" width="480" height="270" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/stage_montage.jpg" data-src="../media/projects/patrol/clips/stage_montage.mp4" aria-label="서로 다른 기믹의 장애물 스테이지와 보스"></video></div>
+      <figcaption>서로 다른 기믹의 장애물 스테이지와 보스</figcaption>
+    </figure>
+    <figure>
+      <div class="cs-media"><video class="cs-clip" width="480" height="270" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/obstacle_stage.jpg" data-src="../media/projects/patrol/clips/obstacle_stage.mp4" aria-label="회전 발판과 이동 장애물 돌파"></video></div>
+      <figcaption>회전 발판과 이동 장애물을 넘는 장애물 스테이지</figcaption>
+    </figure>
+  </div>
+
+  <div class="cs-cards">
+    <div class="cs-card"><span class="tag">SURVIVE</span><h3>웨이브 서바이벌</h3><p>페이즈마다 정해진 시간 동안 여러 종류의 적 웨이브가 몰려옵니다. 시간 안에 페이즈를 넘기지 못하면 더 거센 악몽 웨이브가 시작됩니다.</p></div>
+    <div class="cs-card"><span class="tag">GROW</span><h3>무기 · 패시브 성장</h3><p>적이 떨어뜨린 경험치 구슬을 모아 레벨업할 때마다 보상으로 무기와 패시브를 골라 나만의 빌드를 만듭니다.</p></div>
+    <div class="cs-card"><span class="tag">OBSTACLE</span><h3>장애물 스테이지</h3><p>전투 사이사이에 회전 발판 · 이동 장애물 · 단차가 있는 액션 구간을 돌파해야 다음으로 넘어갈 수 있습니다.</p></div>
+    <div class="cs-card"><span class="tag">BOSS</span><h3>중간 보스와 최종 보스</h3><p>벌 · 화산 · 팬텀 · 전갈 · 거미 · 쌍둥이 등 보스마다 고유 패턴이 있고, 여섯 번째 페이즈 뒤 포탈을 지나 최종 보스와 싸웁니다.</p></div>
+  </div>
+
+  <h3 class="cs-sub">한 판(런)의 흐름</h3>
+  <div class="cs-flow"><span>캐릭터 선택</span><i>→</i><span>웨이브 페이즈</span><i>→</i><span>장애물 스테이지 클리어</span><i>→</i><span>중간 보스</span><i>→</i><span>× 6 반복</span><i>→</i><span>포탈</span><i>→</i><span>최종 보스</span></div>
+  <p class="cs-note">조작 — WASD 이동 · 마우스 시점 · Space 점프 · Left Shift 달리기 (게임패드 지원)</p>
+
+  <div class="cs-grid">
+    <figure><a class="cs-zoom" href="../media/projects/patrol/shot-01.webp" target="_blank" rel="noopener noreferrer"><div class="cs-media"><img src="../media/projects/patrol/shot-01.webp" width="1600" height="900" loading="lazy" alt="대량의 적을 처치하는 전투"></div></a><figcaption>대량의 적을 처치하는 전투</figcaption></figure>
+    <figure><a class="cs-zoom" href="../media/projects/patrol/shot-02.webp" target="_blank" rel="noopener noreferrer"><div class="cs-media"><img src="../media/projects/patrol/shot-02.webp" width="1600" height="900" loading="lazy" alt="장애물 구간 돌파"></div></a><figcaption>장애물 구간 돌파</figcaption></figure>
+    <figure><a class="cs-zoom" href="../media/projects/patrol/shot-03.webp" target="_blank" rel="noopener noreferrer"><div class="cs-media"><img src="../media/projects/patrol/shot-03.webp" width="1600" height="900" loading="lazy" alt="거미 보스와의 전투"></div></a><figcaption>거미 보스와의 전투</figcaption></figure>
+    <figure><a class="cs-zoom" href="../media/projects/patrol/shot-04.webp" target="_blank" rel="noopener noreferrer"><div class="cs-media"><img src="../media/projects/patrol/shot-04.webp" width="1600" height="900" loading="lazy" alt="최종 보스의 광역 공격"></div></a><figcaption>최종 보스의 광역 공격</figcaption></figure>
+  </div>
+</section>
+
+<!-- ================= 01 OPTIMIZATION ================= -->
+<section class="cs-section" id="optimization">
+  <p class="eyebrow">ENGINEERING NOTES</p>
+  <h2>구현 사례</h2>
+
+  <article class="cs-case">
+    <div class="cs-case-head"><span class="num">01</span><h3>대량 Enemy 최적화 — 측정하고, 원인을 좁히고, 다시 측정</h3><p>적 약 1,000마리 환경에서 프레임을 끌어내리는 비용을 Profiler로 하나씩 찾아 네 단계로 나눠 해결했습니다. 모든 수치는 같은 씬 · 같은 적 수에서 적용 전후를 캡처해 Profile Analyzer의 중앙값으로 비교했습니다.</p></div>
+
+    <figure class="cs-fig">
+      <div class="cs-media"><video class="cs-clip" width="480" height="270" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/horde_battle.jpg" data-src="../media/projects/patrol/clips/horde_battle.mp4" aria-label="다양한 Enemy의 동시 전투"></video></div>
+      <figcaption>일반 플레이에서도 여러 종류의 Enemy가 동시에 전투합니다.</figcaption>
+    </figure>
+
+    <div class="cs-bars" role="group" aria-label="최적화 전후 비교">
+      <div class="cs-bars-legend"><span>적용 전</span><span class="after">적용 후</span></div>
+      <div class="cs-bar"><div><strong>분리 힘 계산</strong><span>EnemyManager.Separation</span></div><div class="cs-bar-track"><p><i style="--w:100%"></i>187.07ms</p><p class="after"><i style="--w:2.2%"></i>4.06ms</p></div><b>−97.8%</b></div>
+      <div class="cs-bar"><div><strong>프레임 시간 (Grid)</strong><span>PlayerLoop · 4.6 → 57.7fps</span></div><div class="cs-bar-track"><p><i style="--w:100%"></i>219.3ms</p><p class="after"><i style="--w:7.9%"></i>17.3ms</p></div><b>−92.1%</b></div>
+      <div class="cs-bar"><div><strong>애니메이션 CPU</strong><span>Animators.Update</span></div><div class="cs-bar-track"><p><i style="--w:100%"></i>2.67ms</p><p class="after"><i style="--w:2.6%"></i>0.07ms</p></div><b>−97.4%</b></div>
+      <div class="cs-bar"><div><strong>프레임 시간 (VAT)</strong><span>PlayerLoop</span></div><div class="cs-bar-track"><p><i style="--w:100%"></i>25.34ms</p><p class="after"><i style="--w:69.2%"></i>17.54ms</p></div><b>−30.8%</b></div>
+      <div class="cs-bar"><div><strong>Update 단계</strong><span>BehaviourUpdate</span></div><div class="cs-bar-track"><p><i style="--w:100%"></i>7.17ms</p><p class="after"><i style="--w:90%"></i>6.45ms</p></div><b>−10%</b></div>
+    </div>
+    <p class="cs-note">측정 환경: Unity 6 Editor · i5-12400F / RTX 3060 · 적 약 1,000마리 · Profile Analyzer Compare 중앙값. Grid 비교와 VAT 비교는 각각 다른 측정 조건에서 캡처했습니다.</p>
+
+    <h4 class="cs-sub">1-1. 통합 업데이트 — ManagedUpdate</h4>
+    <div class="cs-body">
+      <div class="cs-block"><span class="cs-label">문제 → 판단</span><p class="cs-text">Unity가 수백 마리 Enemy의 <code class="k">Update()</code>를 개별 호출해 개체 수만큼 호출 진입점이 늘어났습니다(프레임당 평균 965회). 하나의 루프에서 순회하며 실행하는 구조가 필요하다고 판단했습니다.</p></div>
+      <div class="cs-block result"><span class="cs-label">결과</span><p class="cs-text"><code class="k">EnemyManager</code>의 중앙 루프 하나가 활성 Enemy를 갱신합니다. 개별 <code class="k">Update()</code> 호출 <strong>965회 → 0회</strong>, BehaviourUpdate 중앙값 <strong>7.17 → 6.45ms (−10%)</strong>.</p></div>
+    </div>
+    <div class="cs-grid">
+      <figure><div class="cs-media"><video class="cs-clip" width="720" height="404" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/managed_update.jpg" data-src="../media/projects/patrol/clips/managed_update.mp4" aria-label="ManagedUpdate 구조"></video></div><figcaption>분산된 Update → EnemyManager 중앙 루프</figcaption></figure>
+      <details class="cs-code" open style="margin-top:0"><summary>활성 Enemy를 하나의 루프에서 갱신 <span>EnemyManager.cs</span></summary><pre><code>float dt = Time.deltaTime;
+gridUpdateTimer += dt;
+if (gridUpdateTimer &gt;= gridUpdateInterval)   <span class="c">// 0.15초마다 Grid 재등록</span>
+{
+    gridUpdateTimer = 0f;
+    UpdateGrid();
+}
+
+for (int i = activeEnemies.Count - 1; i &gt;= 0; i--)
+    activeEnemies[i].ManagedUpdate(dt);</code></pre></details>
+    </div>
+
+    <h4 class="cs-sub">1-2. 오브젝트 풀링</h4>
+    <div class="cs-body">
+      <div class="cs-block"><span class="cs-label">문제 → 적용</span><p class="cs-text">수백 마리 Enemy의 생성과 파괴가 반복되면서 <code class="k">Instantiate</code> / <code class="k">Destroy</code> 비용과 GC 스파이크가 지속적으로 발생했습니다. 적의 생명주기(스폰 · 피격 · 사망)에서 생기는 <strong>Enemy · 데미지 텍스트 · 경험치 구슬 · 코인</strong> 4종을 대기 풀과 활성 객체의 재사용 순환으로 바꿨습니다.</p></div>
+      <div class="cs-block result"><span class="cs-label">결과</span><p class="cs-text">1,000마리 유지 · 30초 측정에서 지속적으로 튀던 GC 할당이 사라지고, <strong>처음 풀을 채울 때만 할당한 뒤 이후 할당 0</strong>을 유지합니다. 각 풀의 프리팹 · 크기 · 예비 상한은 <code class="k">EnemyPoolDataSO</code>로 조정합니다.</p></div>
+    </div>
+    <figure class="cs-fig"><div class="cs-media"><video class="cs-clip" width="720" height="404" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/object_pooling.jpg" data-src="../media/projects/patrol/clips/object_pooling.mp4" aria-label="오브젝트 풀링 구조"></video></div><figcaption>생성 · 파괴 대신 대기 풀 ↔ 활성 객체 재사용</figcaption></figure>
+
+    <h4 class="cs-sub">1-3. VAT + GPU Instancing</h4>
+    <div class="cs-body">
+      <div class="cs-block"><span class="cs-label">문제 → 판단</span><p class="cs-text">수백 마리의 <code class="k">SkinnedMeshRenderer</code> · <code class="k">Animator</code>가 동시에 갱신되면서 본 갱신과 개별 드로우 제출 비용이 쌓였습니다. 애니메이션 계산을 CPU에서 GPU로 옮기고, 같은 메시를 인스턴싱으로 묶어야 한다고 판단했습니다.</p></div>
+      <div class="cs-block"><span class="cs-label">적용</span><ol class="cs-steps" style="gap:8px">
+        <li>Idle · Move · Attack · Death 클립을 몬스터별 Timeline 시퀀스로 구성</li>
+        <li>SmartVAT로 정점 위치 · 노멀을 텍스처로 베이크 (에디터 1회)</li>
+        <li>Animator · SkinnedMeshRenderer 제거, MeshRenderer + MeshFilter만 유지</li>
+        <li>셰이더가 시간으로 텍스처 프레임을 샘플링 → 동일 Mesh · Material에 GPU Instancing</li>
+      </ol></div>
+    </div>
+    <div class="cs-grid">
+      <figure><div class="cs-media"><video class="cs-clip" width="720" height="404" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/vat_bake.jpg" data-src="../media/projects/patrol/clips/vat_bake.mp4" aria-label="VAT 베이크와 GPU Instancing"></video></div><figcaption>애니메이션 클립 → VAT 텍스처 → 인스턴싱 드로우</figcaption></figure>
+      <div class="cs-table-wrap" style="margin-top:0"><table class="cs-table" style="min-width:0">
+        <thead><tr><th>항목</th><th>전</th><th>후</th><th>변화</th></tr></thead>
+        <tbody>
+          <tr><td>PlayerLoop</td><td class="num">25.34</td><td class="num">17.54</td><td class="num good">−30.8%</td></tr>
+          <tr><td>Animators.Update</td><td class="num">2.67</td><td class="num">0.07</td><td class="num good">−97.4%</td></tr>
+          <tr><td>렌더링</td><td class="num">3.98</td><td class="num">1.85</td><td class="num good">−53.5%</td></tr>
+          <tr><td>풀 재활성</td><td class="num">3.23</td><td class="num">0.70</td><td class="num good">−78.3%</td></tr>
+          <tr><td>Animator 비중</td><td class="num">10.05%</td><td class="num">0.43%</td><td class="num good"></td></tr>
+          <tr><td>적 드로우</td><td class="num">748</td><td class="num">30</td><td class="num good">instanced</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <p class="cs-note">단위 ms · 풀 재활성 = SetActive 시 Animator · SkinnedMesh 초기화 비용 · 드로우 수는 Stats / Frame Debugger 캡처 기준</p>
+
+    <h4 class="cs-sub">1-4. Grid 공간 분할 — 적끼리 겹치지 않게, 싸게</h4>
+    <div class="cs-body">
+      <div class="cs-block"><span class="cs-label">문제 → 판단</span><p class="cs-text">적끼리 겹치지 않게 하려고 Unity 물리 충돌을 쓰면 충돌 계산과 물리 콜백 비용이 누적됩니다. 그렇다고 모든 적을 서로 비교하면 비교 횟수가 N²으로 늘어납니다. <strong>Rigidbody 없이</strong> 충돌과 자연스러운 분산을 구현할 방법이 필요했습니다.</p></div>
+      <div class="cs-block"><span class="cs-label">동작 순서</span><ol class="cs-steps" style="gap:8px">
+        <li>0.15초마다 활성 Enemy의 월드 위치를 2m Grid 셀 좌표로 바꿔 재등록</li>
+        <li>기준 Enemy의 현재 위치로 기준 셀 결정</li>
+        <li>기준 셀과 인접 8칸(3×3)에 등록된 후보만 순회</li>
+        <li>분리 반경 1.5m 안의 이웃을 최대 5마리 확인해 반대 방향 힘을 이동에 합산</li>
+      </ol></div>
+    </div>
+    <div class="cs-grid">
+      <figure><div class="cs-media"><video class="cs-clip" width="720" height="404" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/grid_partition.jpg" data-src="../media/projects/patrol/clips/grid_partition.mp4" aria-label="Grid 공간 분할"></video></div><figcaption>전체 목록 대신 주변 3×3 셀만 조회</figcaption></figure>
+      <details class="cs-code" open style="margin-top:0"><summary>주변 3×3 셀, 이웃은 최대 5마리 <span>EnemyManager.cs</span></summary><pre><code>Vector2Int cell = GetCellPos(targetEnemy.transform.position);
+const int MAX_CHECKS = 5;
+
+for (int x = -1; x &lt;= 1; x++)
+for (int y = -1; y &lt;= 1; y++)
+{
+    if (!spatialGrid.TryGetValue(new Vector2Int(cell.x + x, cell.y + y),
+                                 out List&lt;Enemy&gt; neighbors))
+        continue;
+
+    for (int i = 0; i &lt; neighbors.Count; i++)
+    {
+        if (checkCount &gt;= MAX_CHECKS) return force;
+        ...
+        if (sqrDist &gt; 0 &amp;&amp; sqrDist &lt; sqrRadius)
+        {
+            <span class="c">// 가까울수록 강하게 밀어냄</span>
+            force += diff.normalized / Mathf.Sqrt(sqrDist);
+            checkCount++;
+        }
+    }
+}</code></pre></details>
+    </div>
+    <div class="cs-table-wrap"><table class="cs-table">
+      <thead><tr><th>항목 (중앙값)</th><th>적용 전 (전체 순회)</th><th>적용 후 (Grid)</th><th>변화</th></tr></thead>
+      <tbody>
+        <tr><td>프레임 시간 (PlayerLoop)</td><td class="num">219.25ms</td><td class="num">17.33ms</td><td class="num good">−92.1%</td></tr>
+        <tr><td>ManagedUpdateLoop (적 갱신)</td><td class="num">192.14ms</td><td class="num">6.31ms</td><td class="num good">−96.7%</td></tr>
+        <tr><td>EnemyManager.Separation</td><td class="num">187.07ms</td><td class="num">4.06ms</td><td class="num good">−97.8%</td></tr>
+        <tr><td>거리 비교 횟수</td><td class="num">≈83.9만 (N²)</td><td class="num">≤3.1만 (N×32)</td><td class="num good">−96%</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cs-note">측정 방법: <code class="k">EnemyManager.useSpatialGrid</code> 토글로 전체 순회 / Grid를 같은 씬 · 같은 적 수(약 916 / 969마리)에서 캡처. 셀 2m · 반경 1.5m · 후보 32. Grid 재등록(UpdateGrid)은 프레임당 평균 약 0.05ms.</p>
+
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/EnemyManager.cs" target="_blank" rel="noopener noreferrer">EnemyManager.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy.cs" target="_blank" rel="noopener noreferrer">Enemy.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy_Game_Data/EnemyPoolDataSO.cs" target="_blank" rel="noopener noreferrer">EnemyPoolDataSO.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/Editor/EnemySpatialGridGizmo.cs" target="_blank" rel="noopener noreferrer">EnemySpatialGridGizmo.cs</a></div>
+    <details class="cs-slides"><summary>포트폴리오 슬라이드 보기 (6장)</summary><div class="cs-grid three">
+      <a class="cs-zoom" href="../media/projects/patrol/slides/cdf_managed_update.webp" target="_blank" rel="noopener noreferrer"><img src="../media/projects/patrol/slides/cdf_managed_update.webp" width="1600" height="900" loading="lazy" alt="ManagedUpdate 슬라이드"></a>
+      <a class="cs-zoom" href="../media/projects/patrol/slides/cdf_pooling.webp" target="_blank" rel="noopener noreferrer"><img src="../media/projects/patrol/slides/cdf_pooling.webp" width="1600" height="900" loading="lazy" alt="오브젝트 풀링 슬라이드"></a>
+      <a class="cs-zoom" href="../media/projects/patrol/slides/cdf_vat.webp" target="_blank" rel="noopener noreferrer"><img src="../media/projects/patrol/slides/cdf_vat.webp" width="1600" height="900" loading="lazy" alt="VAT와 GPU Instancing 슬라이드"></a>
+      <a class="cs-zoom" href="../media/projects/patrol/slides/cdf_vat_compare.webp" target="_blank" rel="noopener noreferrer"><img src="../media/projects/patrol/slides/cdf_vat_compare.webp" width="1600" height="900" loading="lazy" alt="VAT 성능 비교 슬라이드"></a>
+      <a class="cs-zoom" href="../media/projects/patrol/slides/cdf_grid.webp" target="_blank" rel="noopener noreferrer"><img src="../media/projects/patrol/slides/cdf_grid.webp" width="1600" height="900" loading="lazy" alt="공간 분할 분리 계산 슬라이드"></a>
+      <a class="cs-zoom" href="../media/projects/patrol/slides/cdf_grid_compare.webp" target="_blank" rel="noopener noreferrer"><img src="../media/projects/patrol/slides/cdf_grid_compare.webp" width="1600" height="900" loading="lazy" alt="공간 분할 성능 비교 슬라이드"></a>
+    </div></details>
+  </article>
+
+  <!-- ================= 02 MULTILAYER ================= -->
+  <article class="cs-case" id="multilayer">
+    <div class="cs-case-head"><span class="num">02</span><h3>NavMesh 없이, 겹쳐 있는 층을 구분해 추적하기</h3><p>같은 XZ 좌표에 여러 층이 겹치는 지형에서 Enemy가 어느 층으로 가야 하는지 판단하지 못하는 문제를, 수평 이동과 높이 보정을 분리해 해결했습니다.</p></div>
+
+    <div class="cs-grid">
+      <figure><div class="cs-media"><video class="cs-clip" width="480" height="270" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/multilayer.jpg" data-src="../media/projects/patrol/clips/multilayer.mp4" aria-label="단차가 겹치는 전장"></video></div><figcaption>단차와 층이 겹치는 전장에서 플레이어를 쫓는 적</figcaption></figure>
+      <figure><div class="cs-media"><video class="cs-clip" width="720" height="404" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/raycast_cases.jpg" data-src="../media/projects/patrol/clips/raycast_cases.mp4" aria-label="같은 XZ, 다른 층을 구분하는 방법"></video></div><figcaption>같은 XZ, 다른 층 — 상황별 Ray 선택</figcaption></figure>
+    </div>
+
+    <div class="cs-body">
+      <div class="cs-block"><span class="cs-label">문제</span><p class="cs-text">다층 구조 맵에서 수백 마리가 NavMesh로 경로를 계산하면 비용이 과도하게 발생합니다. 그렇다고 XZ로만 플레이어를 따라가면, 플레이어가 다른 층에 있거나 계단 · 단차를 만났을 때 지면 높이를 맞출 수 없었습니다.</p></div>
+      <div class="cs-block"><span class="cs-label">설계</span><p class="cs-text">XZ는 플레이어를 직접 추적하고, <strong>높이(Y)만 0.1초마다 이동 예측 위치에서 Raycast로 보정</strong>합니다. 플레이어와의 높이 차가 2m 이상이면 다른 층으로 판단합니다. 높이 차가 0.5m를 넘으면 수평 이동을 멈추고 천천히 오르고(Slow Climb), 작은 단차는 빠르게 넘으며(Fast Step), 아래층으로는 낙하합니다.</p></div>
+    </div>
+
+    <div class="cs-table-wrap"><table class="cs-table">
+      <thead><tr><th>레이</th><th>사용 조건</th><th>동작</th></tr></thead>
+      <tbody>
+        <tr><td>Low Ray · Raycast</td><td>플레이어가 같은 층 (기본 경로 · 비용 최소)</td><td>예측 위치의 발 위 2m에서 아래로 4m 발사 → 히트하면 그 바닥 높이 유지, MISS(절벽 · 큰 단차)면 High Ray로 재탐색</td></tr>
+        <tr><td>High Ray · RaycastNonAlloc</td><td>플레이어가 2m 이상 위층에 있거나 Low Ray가 MISS</td><td>플레이어 Y + 5m에서 아래로 100m 발사 → 관통한 모든 층의 바닥 히트 중 <strong>플레이어 Y와 가장 가까운 층</strong>을 목표로 선택</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="cs-cards">
+      <div class="cs-card"><span class="tag">UP</span><h4>플레이어가 위층</h4><p>높이 차 ≥ 2m → High Ray → 관통 히트 중 플레이어 Y에 가장 가까운 2층 선택 → 목표 높이까지 Slow Climb.</p></div>
+      <div class="cs-card"><span class="tag">DOWN</span><h4>플레이어가 아래층</h4><p>Low Ray가 발밑 바닥을 못 찾음(MISS) → High Ray fallback → 1층 선택 → 낙하.</p></div>
+      <div class="cs-card"><span class="tag">SAME</span><h4>같은 층</h4><p>Low Ray가 발밑 바닥을 맞힘 → 현재 층 유지. High Ray를 쓰지 않아 비용이 가장 낮은 경로입니다.</p></div>
+    </div>
+
+    <details class="cs-code"><summary>High Ray — 관통한 바닥 중 플레이어 높이와 가장 가까운 층 <span>Enemy.cs</span></summary><pre><code>int hitCount = Physics.RaycastNonAlloc(highRayStart, Vector3.down, hitBuffer, raycastDistance, groundLayer);
+float closestDiff = float.MaxValue;
+for (int i = 0; i &lt; hitCount; i++)
+{
+    float diff = Mathf.Abs(hitBuffer[i].point.y - playerTarget.position.y);
+    if (diff &lt; closestDiff)
+    {
+        closestDiff = diff;
+        cachedTargetHeight = hitBuffer[i].point.y;
+        cachedHitGround = true;
+    }
+}
+
+<span class="c">// 높이 차가 0.5m를 넘으면 수평 이동을 멈추고 천천히 오름, 그 외에는 빠르게 단차를 넘음</span>
+float currentClimbSpeed;
+if (heightDiff &gt; 0.5f) { horizontalVelocity = Vector3.zero; currentClimbSpeed = slowClimbSpeed; }
+else currentClimbSpeed = fastStepSpeed;</code></pre></details>
+
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy.cs" target="_blank" rel="noopener noreferrer">Enemy.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Boss/BossEnemy.cs" target="_blank" rel="noopener noreferrer">BossEnemy.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/Editor/EnemyFloorTrackingGizmo.cs" target="_blank" rel="noopener noreferrer">EnemyFloorTrackingGizmo.cs</a></div>
+    <details class="cs-slides"><summary>포트폴리오 슬라이드 보기 (2장)</summary><div class="cs-grid">
+      <a class="cs-zoom" href="../media/projects/patrol/slides/cdf_raycast_flow.webp" target="_blank" rel="noopener noreferrer"><img src="../media/projects/patrol/slides/cdf_raycast_flow.webp" width="1600" height="900" loading="lazy" alt="다층 지형 추적 로직 구조 슬라이드"></a>
+      <a class="cs-zoom" href="../media/projects/patrol/slides/cdf_raycast_cases.webp" target="_blank" rel="noopener noreferrer"><img src="../media/projects/patrol/slides/cdf_raycast_cases.webp" width="1600" height="900" loading="lazy" alt="다층 지형 추적 상황별 판단 슬라이드"></a>
+    </div></details>
+  </article>
+
+  <!-- ================= 03 STRUCTURE ================= -->
+  <article class="cs-case" id="structure">
+    <div class="cs-case-head"><span class="num">03</span><h3>일반 적과 보스, 다른 생명주기를 위한 두 개의 기반 클래스</h3><p><code class="k">IDamageable</code>을 공통 계약으로 유지하고, 대량 처리가 중요한 일반 Enemy와 복합 패턴이 중요한 Boss의 책임에 맞게 기반 클래스를 나눴습니다.</p></div>
+
+    <div class="cs-grid">
+      <figure><div class="cs-media"><video class="cs-clip" width="480" height="270" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/enemy_attack.jpg" data-src="../media/projects/patrol/clips/enemy_attack.mp4" aria-label="일반 Enemy의 추적과 공격"></video></div><figcaption>일반 Enemy — 추적과 타입별 공격</figcaption></figure>
+      <figure><div class="cs-media"><video class="cs-clip" width="480" height="270" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/midboss.jpg" data-src="../media/projects/patrol/clips/midboss.mp4" aria-label="중간 보스의 고유 공격"></video></div><figcaption>중간 보스 — 고유 공격 패턴</figcaption></figure>
+    </div>
+
+    <div class="cs-table-wrap"><table class="cs-table">
+      <thead><tr><th>구분</th><th>Enemy (일반 6종)</th><th>BossEnemy (보스 9종)</th></tr></thead>
+      <tbody>
+        <tr><td>대상</td><td>수백 마리 일반 Enemy의 효율적인 관리</td><td>소수 Boss의 고유 공격 패턴 관리</td></tr>
+        <tr><td>갱신</td><td><code class="k">ManagedUpdate</code>에서 활성 개체를 일괄 갱신</td><td>각 Boss가 독립 <code class="k">Update</code>와 <code class="k">Coroutine</code>으로 패턴 실행</td></tr>
+        <tr><td>확장</td><td><code class="k">virtual</code> 메서드로 필요한 동작만 선택적으로 재정의</td><td><code class="k">abstract Attack()</code> 구현을 모든 Boss 클래스에 강제</td></tr>
+        <tr><td>사망</td><td>Object Pool로 반환</td><td>사망 이벤트 발행 후 오브젝트 제거</td></tr>
+        <tr><td>하위 타입</td><td>Basic · Dash · Range · Laser · Flying · Suicide</td><td>Bee · Volcano · Phantom · Scorpion · Spider · Twin(Geezer · Queen) · 중간 보스 · Final</td></tr>
+      </tbody>
+    </table></div>
+    <div class="cs-callout"><p><strong>왜 BossEnemy가 Enemy를 상속하지 않나요?</strong> — 일반 Enemy는 중앙 루프 · 풀링 · Grid 분리 계산에 묶여 있는 반면, 보스는 한두 마리가 각자의 코루틴으로 긴 패턴을 실행합니다. 갱신 방식과 생명주기가 다르기 때문에 상속 대신 <code class="k">IDamageable</code>이라는 공통 계약만 공유하게 했습니다. 두 계열 모두 이동 · 피격 · 사망과 공격 진입점은 상위 클래스가 관리하고, 하위 클래스는 필요한 이동 방식과 공격 동작만 재정의 · 추가합니다.</p></div>
+
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy.cs" target="_blank" rel="noopener noreferrer">Enemy.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/tree/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/EnemyType" target="_blank" rel="noopener noreferrer">EnemyType/</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Boss/BossEnemy.cs" target="_blank" rel="noopener noreferrer">BossEnemy.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/tree/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Boss/BossType" target="_blank" rel="noopener noreferrer">BossType/</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Boss/BossType/FinalBoss.cs" target="_blank" rel="noopener noreferrer">FinalBoss.cs</a></div>
+    <details class="cs-slides"><summary>포트폴리오 슬라이드 보기 (1장)</summary><div class="cs-grid">
+      <a class="cs-zoom" href="../media/projects/patrol/slides/cdf_enemy_boss.webp" target="_blank" rel="noopener noreferrer"><img src="../media/projects/patrol/slides/cdf_enemy_boss.webp" width="1600" height="900" loading="lazy" alt="Enemy와 Boss 구조 슬라이드"></a>
+    </div></details>
+  </article>
+
+  <!-- ================= 04 FLOW ================= -->
+  <article class="cs-case" id="flow">
+    <div class="cs-case-head"><span class="num">04</span><h3>웨이브부터 최종 보스까지, 데이터로 짜는 런 구조</h3><p>시간 제한 페이즈 → 장애물 스테이지 클리어 → 중간 보스 → 다음 페이즈를 6회 반복한 뒤 포탈을 통해 최종 보스전으로 전환되는 흐름을 ScriptableObject 데이터와 커스텀 인스펙터로 구성했습니다.</p></div>
+
+    <div class="cs-grid">
+      <figure><div class="cs-media"><video class="cs-clip" width="720" height="404" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/stage_flow.jpg" data-src="../media/projects/patrol/clips/stage_flow.mp4" aria-label="웨이브에서 장애물, 중간 보스까지"></video></div><figcaption>웨이브 → 장애물 → 중간 보스로 이어지는 페이즈</figcaption></figure>
+      <figure><div class="cs-media"><video class="cs-clip" width="480" height="270" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/nightmare_wave.jpg" data-src="../media/projects/patrol/clips/nightmare_wave.mp4" aria-label="시간 초과 시 악몽 웨이브"></video></div><figcaption>제한 시간 초과 시 시작되는 악몽 웨이브</figcaption></figure>
+    </div>
+
+    <div class="cs-table-wrap"><table class="cs-table">
+      <thead><tr><th>데이터</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>Theme · StageTheme_SO</td><td>테마에서 쓸 Enemy 풀 목록과 페이즈 7개(0~6)를 순서대로 보유</td></tr>
+        <tr><td>Phase · StagePhase_SO</td><td>제한 시간 + 정상 웨이브 목록 / 시간 초과 시 악몽 웨이브 목록</td></tr>
+        <tr><td>Wave · WaveEnemy_DataSO</td><td>시작 시각 · 간격 · 마리 수 · 적 구성(풀 + 가중치 %) · 미니보스</td></tr>
+        <tr><td>Enemy · EnemyPoolDataSO</td><td>프리팹 · 풀 크기 · 예비 상한</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="cs-body">
+      <div class="cs-block"><span class="cs-label">진행 루프</span><ul class="cs-list">
+        <li><code class="k">StageRunManager</code>가 페이즈 진행, 장애물 스테이지, 중간 보스, 포탈과 최종 보스 전환을 관리</li>
+        <li>제한 시간이 지나면 별도 악몽 타이머와 웨이브를 시작해 후반 압박을 만듦</li>
+        <li>여섯 번째 페이즈 뒤 포탈을 통해 최종 보스 필드로 전환</li>
+      </ul></div>
+      <div class="cs-block"><span class="cs-label">Theme SO 커스텀 인스펙터</span><ul class="cs-list">
+        <li>페이즈 구성 막대 — 제한 시간 비율로 P1~P7 구간 분할</li>
+        <li>정상 / Nightmare 웨이브 칸을 시작 시각 순으로 배치한 타임라인</li>
+        <li>웨이브 표 — 시작 · 지속 · 간격 · 마리 · 마리/초 · 보스 · 적 구성(풀 색 + 가중치 %)</li>
+        <li>행 클릭으로 웨이브 에셋 핑, Ctrl+클릭으로 해당 SO로 바로 이동</li>
+      </ul></div>
+    </div>
+
+    <figure class="cs-fig"><div class="cs-media"><video class="cs-clip" width="480" height="270" muted loop playsinline preload="none" poster="../media/projects/patrol/clips/portal_boss.jpg" data-src="../media/projects/patrol/clips/portal_boss.mp4" aria-label="포탈을 통한 최종 보스 입장"></video></div><figcaption>6페이즈 이후 포탈을 통해 최종 보스 필드로 전환</figcaption></figure>
+
+    <div class="cs-callout"><p><strong>팀원 작업 편의</strong> — 웨이브 수치와 적 구성이 코드가 아니라 에셋에 있기 때문에, 기획 · 밸런스 담당 팀원이 코드를 수정하지 않고 인스펙터에서 웨이브와 패턴을 조정할 수 있습니다. 커스텀 인스펙터는 수십 개의 웨이브 에셋을 일일이 열어 보지 않아도 한 페이즈의 흐름을 한눈에 확인하도록 만든 도구입니다.</p></div>
+
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy_Game_Data/new/StageRunManager.cs" target="_blank" rel="noopener noreferrer">StageRunManager.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy_Game_Data/new/StageTheme_SO.cs" target="_blank" rel="noopener noreferrer">StageTheme_SO.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy_Game_Data/new/StagePhase_SO.cs" target="_blank" rel="noopener noreferrer">StagePhase_SO.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Enemy/Enemy_Game_Data/new/WaveEnemy_DataSO.cs" target="_blank" rel="noopener noreferrer">WaveEnemy_DataSO.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/Editor/StageScheduleDebugViewEditor.cs" target="_blank" rel="noopener noreferrer">StageScheduleDebugViewEditor.cs</a><a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio/blob/main/VehicleSurvivor/Assets/02.%20Scripts/GamePlay/Runtime/RunTimers.cs" target="_blank" rel="noopener noreferrer">RunTimers.cs</a></div>
+    <details class="cs-slides"><summary>포트폴리오 슬라이드 보기 (1장)</summary><div class="cs-grid">
+      <a class="cs-zoom" href="../media/projects/patrol/slides/cdf_stage_so.webp" target="_blank" rel="noopener noreferrer"><img src="../media/projects/patrol/slides/cdf_stage_so.webp" width="1600" height="900" loading="lazy" alt="인게임 플로우 SO 데이터 슬라이드"></a>
+    </div></details>
+  </article>
+</section>
+
+<!-- ================= RETRO ================= -->
+<section class="cs-section" id="retro">
+  <p class="eyebrow">WHAT I LEARNED</p>
+  <h2>배운 점</h2>
+  <div class="cs-cards">
+    <div class="cs-card"><span class="tag">MEASURE</span><h3>측정 → 원인 → 적용 → 재측정</h3><p>Profiler와 Profile Analyzer로 같은 조건의 전후를 비교하며, 감이 아니라 수치로 최적화 효과를 확인하는 방식으로 작업했습니다. 덕분에 효과가 작은 최적화(ManagedUpdate −10%)와 결정적인 최적화(Grid −97.8%)를 구분해 설명할 수 있었습니다.</p></div>
+    <div class="cs-card"><span class="tag">FOR THE TEAM</span><h3>팀원을 위한 데이터 구조</h3><p>Last Ember에서 익힌 ScriptableObject · 커스텀 인스펙터 경험을 살려, 팀원이 코드를 수정하지 않고도 웨이브와 패턴을 조정할 수 있게 설계했습니다. 구조를 만들 때 사용자가 팀원이라는 관점을 처음으로 의식했습니다.</p></div>
+  </div>
+</section>
+
+<!-- ================= RESOURCES ================= -->
+<section class="cs-section" id="resources">
+  <p class="eyebrow">TAKE A CLOSER LOOK</p>
+  <h2>영상과 프로젝트 자료</h2>
+  <p class="cs-text" style="margin-top:12px">플레이와 최적화 설명을 함께 정리한 포트폴리오 영상입니다. 썸네일을 누르면 재생됩니다.</p>
+  <div style="margin-top:22px"><button class="cs-yt" type="button" data-id="qPuH5ze9sbI" style="--thumb:url('https://i.ytimg.com/vi/qPuH5ze9sbI/maxresdefault.jpg')" aria-label="우당탕 방범대 포트폴리오 영상 재생"><span class="play" aria-hidden="true"></span><span class="label">우당탕 방범대 — 포트폴리오 영상 (YouTube)</span></button></div>
+  <div class="cs-resources">
+    <a href="https://github.com/chlwnsdud2025/Clumsy-Defense-Force-Portfolio" target="_blank" rel="noopener noreferrer"><small>SOURCE CODE</small><strong>GitHub 저장소 ↗</strong><span>담당 코드와 README 정리</span></a>
+    <a href="https://www.youtube.com/watch?v=qPuH5ze9sbI" target="_blank" rel="noopener noreferrer"><small>VIDEO</small><strong>YouTube에서 보기 ↗</strong><span>플레이 + 최적화 설명 영상</span></a>
+    <a href="https://www.canva.com/d/mzu8Fvwvj8IVG7d" target="_blank" rel="noopener noreferrer"><small>PORTFOLIO</small><strong>Canva 포트폴리오 ↗</strong><span>전체 프로젝트 포트폴리오 문서</span></a>
+  </div>
+</section>
+
+</div></div>
+<a class="next-project" href="last-ember.html"><div class="shell"><span>NEXT PROJECT</span><h2>Last Ember</h2><span class="next-arrow" aria-hidden="true">↗</span></div></a>
+</main>
+<footer class="footer"><div class="shell footer-inner"><a class="brand" href="../index.html">CJY<span>.</span></a><span>© 2026 최준영 · Unity Client Developer</span><a href="../index.html">포트폴리오 홈 <span aria-hidden="true">↑</span></a></div></footer>
+</body>
+</html>

@@ -58,3 +58,36 @@ if (tocLinks.length && 'IntersectionObserver' in window) {
   }, { rootMargin: '-15% 0px -55% 0px', threshold: 0 });
   sections.forEach((section) => observer.observe(section));
 }
+// Case-study clips: download only when near the viewport, play while visible, pause when scrolled away.
+const clips = [...document.querySelectorAll('video.cs-clip')];
+const visibleClips = new Set();
+function playClip(video) {
+  if (!video.src) video.src = video.dataset.src;
+  video.play().catch(() => {});
+}
+if (reducedMotion.matches || !('IntersectionObserver' in window)) {
+  clips.forEach((video) => { video.controls = true; video.preload = 'none'; if (!video.src) video.src = video.dataset.src; });
+} else {
+  const clipObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const video = entry.target;
+      if (entry.isIntersecting) { visibleClips.add(video); playClip(video); }
+      else { visibleClips.delete(video); video.pause(); }
+    });
+  }, { rootMargin: '160px 0px', threshold: 0.15 });
+  clips.forEach((video) => clipObserver.observe(video));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) visibleClips.forEach(playClip); });
+}
+// YouTube: show a thumbnail first and load the player only after a click.
+document.querySelectorAll('button.cs-yt').forEach((button) => {
+  button.addEventListener('click', () => {
+    const frame = document.createElement('iframe');
+    frame.className = 'cs-yt-frame';
+    frame.src = 'https://www.youtube-nocookie.com/embed/' + button.dataset.id + '?autoplay=1&rel=0';
+    frame.title = button.getAttribute('aria-label') || 'YouTube video';
+    frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    frame.referrerPolicy = 'strict-origin-when-cross-origin';
+    frame.allowFullscreen = true;
+    button.replaceWith(frame);
+  });
+});

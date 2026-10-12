@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="t d">
+<title id="t">Winter Stove 고양이 상태 머신</title>
+<desc id="d">Idle에서 확률로 Walk, Run, Stretch, Sleep으로 전환되고, XR 손 입력(Hover, Select)으로 Petted, Grabbed, PutDown 상태로 전환되는 고양이 FSM 구조도</desc>
+<defs>
+  <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#3B6FD8"/></marker>
+  <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#9AA3B5"/></marker>
+  <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#E08A2E"/></marker>
+  <style>
+    text{font-family:Pretendard,'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .crumb{font-size:22px;font-weight:600;fill:#3B6FD8}
+    .h1{font-size:42px;font-weight:800;fill:#1F2A44;letter-spacing:-1px}
+    .sub{font-size:21px;fill:#7A8296}
+    .panel{fill:#FFFFFF;stroke:#E1E3EA;stroke-width:2}
+    .ptitle{font-size:22px;font-weight:700;fill:#1F2A44}
+    .pnote{font-size:17px;fill:#8A93A6}
+    .node{fill:#FFFFFF;stroke:#C9CFDB;stroke-width:2}
+    .idle{fill:#EEF3FD;stroke:#3B6FD8;stroke-width:3}
+    .hand{fill:#FFF5EA;stroke:#E08A2E;stroke-width:2.5}
+    .name{font-size:27px;font-weight:800;fill:#1F2A44}
+    .desc{font-size:16.5px;fill:#5B6478}
+    .exit{font-size:15.5px;font-weight:600;fill:#1E9E7A}
+    .pct{font-size:17px;font-weight:800;fill:#3B6FD8}
+    .chip{fill:#1F2A44}
+    .chipt{font-size:16px;font-weight:700;fill:#FFFFFF}
+    .ichip{fill:#1E9E7A}
+    .lab{font-size:15px;font-weight:600;fill:#E08A2E}
+  </style>
+</defs>
+<rect width="1600" height="900" fill="#F4F3EE"/>
+
+<text x="64" y="72" class="crumb">Winter Stove  /  고양이 AI</text>
+<text x="64" y="128" class="h1">행동은 상태로 나누고, 손 입력은 이벤트로 전환합니다</text>
+<text x="64" y="166" class="sub">CatController가 8개 State를 생성해 CatStateMachine에 주입 · 이동은 NavMeshAgent · 전환은 Exit() → Enter()</text>
+
+<!-- ===== Left panel: autonomous ===== -->
+<rect x="48" y="200" width="972" height="652" rx="20" class="panel"/>
+<text x="80" y="244" class="ptitle">자율 행동 — Idle에서 확률로 다음 행동 선택</text>
+<text x="80" y="272" class="pnote">Idle 1초 대기 → Random.Range(0, 100) → 행동이 끝나면 Idle로 복귀</text>
+
+<!-- Idle hub -->
+<rect x="414" y="300" width="240" height="96" rx="18" class="idle"/>
+<text x="534" y="344" class="name" text-anchor="middle">Idle</text>
+<text x="534" y="373" class="desc" text-anchor="middle">대기 후 다음 행동 선택</text>
+<!-- self loop: 10% -->
+<path d="M654 328 C 726 300, 726 396, 654 368" fill="none" stroke="#3B6FD8" stroke-width="2.5" marker-end="url(#ab)"/>
+<text x="738" y="344" class="pct">10%</text>
+<text x="738" y="366" class="desc">2~4초 더 대기</text>
+
+<!-- outgoing (solid) and return (dashed) arrows -->
+<!-- Walk -->
+<line x1="486" y1="396" x2="178" y2="546" stroke="#3B6FD8" stroke-width="2.5" marker-end="url(#ab)"/>
+<line x1="222" y1="546" x2="500" y2="398" stroke="#9AA3B5" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ag)"/>
+<rect x="276" y="446" width="58" height="28" rx="14" fill="#FFFFFF" stroke="#3B6FD8" stroke-width="1.5"/><text x="305" y="466" class="pct" text-anchor="middle">40%</text>
+<!-- Run -->
+<line x1="522" y1="396" x2="404" y2="546" stroke="#3B6FD8" stroke-width="2.5" marker-end="url(#ab)"/>
+<line x1="448" y1="546" x2="536" y2="398" stroke="#9AA3B5" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ag)"/>
+<rect x="420" y="456" width="58" height="28" rx="14" fill="#FFFFFF" stroke="#3B6FD8" stroke-width="1.5"/><text x="449" y="476" class="pct" text-anchor="middle">20%</text>
+<!-- Stretch -->
+<line x1="546" y1="396" x2="636" y2="546" stroke="#3B6FD8" stroke-width="2.5" marker-end="url(#ab)"/>
+<line x1="680" y1="546" x2="560" y2="398" stroke="#9AA3B5" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ag)"/>
+<rect x="612" y="456" width="58" height="28" rx="14" fill="#FFFFFF" stroke="#3B6FD8" stroke-width="1.5"/><text x="641" y="476" class="pct" text-anchor="middle">20%</text>
+<!-- Sleep -->
+<line x1="582" y1="396" x2="868" y2="546" stroke="#3B6FD8" stroke-width="2.5" marker-end="url(#ab)"/>
+<line x1="912" y1="546" x2="596" y2="398" stroke="#9AA3B5" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ag)"/>
+<rect x="766" y="446" width="58" height="28" rx="14" fill="#FFFFFF" stroke="#3B6FD8" stroke-width="1.5"/><text x="795" y="466" class="pct" text-anchor="middle">10%</text>
+
+<!-- state nodes -->
+<rect x="84" y="548" width="216" height="168" rx="16" class="node"/>
+<text x="192" y="590" class="name" text-anchor="middle">Walk</text>
+<text x="192" y="622" class="desc" text-anchor="middle">반경 5m 안의 NavMesh</text>
+<text x="192" y="645" class="desc" text-anchor="middle">랜덤 지점으로 걷기</text>
+<text x="192" y="690" class="exit" text-anchor="middle">도착하면 Idle</text>
+
+<rect x="318" y="548" width="216" height="168" rx="16" class="node"/>
+<text x="426" y="590" class="name" text-anchor="middle">Run</text>
+<text x="426" y="622" class="desc" text-anchor="middle">반경 10m · 달리기 속도로</text>
+<text x="426" y="645" class="desc" text-anchor="middle">더 먼 지점까지 이동</text>
+<text x="426" y="690" class="exit" text-anchor="middle">도착하면 Idle</text>
+
+<rect x="552" y="548" width="216" height="168" rx="16" class="node"/>
+<text x="660" y="590" class="name" text-anchor="middle">Stretch</text>
+<text x="660" y="622" class="desc" text-anchor="middle">제자리에서</text>
+<text x="660" y="645" class="desc" text-anchor="middle">기지개 애니메이션</text>
+<text x="660" y="690" class="exit" text-anchor="middle">95% 재생되면 Idle</text>
+
+<rect x="786" y="548" width="216" height="168" rx="16" class="node"/>
+<text x="894" y="590" class="name" text-anchor="middle">Sleep</text>
+<text x="894" y="622" class="desc" text-anchor="middle">눕기 → 15~30초 수면</text>
+<text x="894" y="645" class="desc" text-anchor="middle">→ 기상 (3단계 Phase)</text>
+<text x="894" y="690" class="exit" text-anchor="middle">기상이 끝나면 Idle</text>
+
+<g transform="translate(84 760)">
+  <line x1="0" y1="12" x2="44" y2="12" stroke="#3B6FD8" stroke-width="2.5" marker-end="url(#ab)"/>
+  <text x="56" y="18" class="desc">Idle에서 선택될 확률</text>
+  <line x1="250" y1="12" x2="294" y2="12" stroke="#9AA3B5" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ag)"/>
+  <text x="306" y="18" class="desc">행동 종료 후 Idle 복귀</text>
+  <text x="0" y="56" class="pnote">애니메이션 종료는 normalizedTime과 IsInTransition으로 판단해, 전환 중 오판을 막습니다.</text>
+</g>
+
+<!-- ===== Right panel: XR hand events ===== -->
+<rect x="1044" y="200" width="508" height="652" rx="20" class="panel"/>
+<text x="1076" y="244" class="ptitle">손 상호작용 — XR 이벤트로 즉시 전환</text>
+<text x="1076" y="272" class="pnote">어느 상태에서든 XR Interaction Toolkit 이벤트가 끼어듭니다</text>
+
+<!-- Row A: Hover -> Petted -> Idle -->
+<rect x="1076" y="300" width="148" height="36" rx="18" class="chip"/><text x="1150" y="324" class="chipt" text-anchor="middle">Hover Entered</text>
+<line x1="1150" y1="338" x2="1150" y2="364" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+<rect x="1076" y="368" width="290" height="92" rx="16" class="hand"/>
+<text x="1098" y="404" class="name">Petted</text>
+<text x="1098" y="432" class="desc">3초 애교 애니메이션 + 울음소리</text>
+<text x="1098" y="452" class="desc">잡혀 있을 때는 무시</text>
+<line x1="1368" y1="414" x2="1400" y2="414" stroke="#9AA3B5" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ag)"/>
+<rect x="1406" y="396" width="130" height="36" rx="18" class="ichip"/><text x="1471" y="420" class="chipt" text-anchor="middle">Idle</text>
+
+<!-- Row B: Select Entered -> Grabbed -> Select Exited -> PutDown -> Idle -->
+<rect x="1076" y="494" width="148" height="36" rx="18" class="chip"/><text x="1150" y="518" class="chipt" text-anchor="middle">Select Entered</text>
+<line x1="1150" y1="532" x2="1150" y2="558" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+<rect x="1076" y="562" width="290" height="92" rx="16" class="hand"/>
+<text x="1098" y="598" class="name">Grabbed</text>
+<text x="1098" y="626" class="desc">NavMeshAgent 끄고 들어올림 모션</text>
+<text x="1098" y="646" class="desc">자던 중이었으면 다른 모션 선택</text>
+<line x1="1150" y1="656" x2="1150" y2="682" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+<rect x="1076" y="686" width="148" height="36" rx="18" class="chip"/><text x="1150" y="710" class="chipt" text-anchor="middle">Select Exited</text>
+<line x1="1150" y1="724" x2="1150" y2="750" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+<rect x="1076" y="754" width="290" height="80" rx="16" class="hand"/>
+<text x="1098" y="788" class="name">PutDown</text>
+<text x="1098" y="816" class="desc">내려놓기 모션 90% 재생 후 전환</text>
+<line x1="1368" y1="794" x2="1400" y2="794" stroke="#9AA3B5" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ag)"/>
+<rect x="1406" y="776" width="130" height="36" rx="18" class="ichip"/><text x="1471" y="799" class="chipt" text-anchor="middle" style="font-size:15px">Idle · Agent ON</text>
+</svg>

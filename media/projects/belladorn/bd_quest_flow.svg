@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="t d">
+<title id="t">Belladorn 퀘스트 시스템 구조</title>
+<desc id="d">QuestData에 조건 ScriptableObject를 조합하고, 적 처치·아이템 획득·아이템 사용·NPC 대화·영역 도달 이벤트가 QuestManager.UpdateCondition으로 진행도를 올려 완료·보상·연계 퀘스트로 이어지는 구조도</desc>
+<defs>
+  <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#3B6FD8"/></marker>
+  <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#E08A2E"/></marker>
+  <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1E9E7A"/></marker>
+  <style>
+    text{font-family:Pretendard,'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+    .crumb{font-size:22px;font-weight:600;fill:#3B6FD8}
+    .h1{font-size:42px;font-weight:800;fill:#1F2A44;letter-spacing:-1px}
+    .sub{font-size:21px;fill:#7A8296}
+    .panel{fill:#FFFFFF;stroke:#E1E3EA;stroke-width:2}
+    .ptitle{font-size:22px;font-weight:700;fill:#1F2A44}
+    .pnote{font-size:16px;fill:#8A93A6}
+    .row{fill:#F7F8FB;stroke:#E1E3EA;stroke-width:1.5}
+    .blue{fill:#EEF3FD;stroke:#3B6FD8;stroke-width:2.5}
+    .orange{fill:#FFF5EA;stroke:#E08A2E;stroke-width:2.5}
+    .green{fill:#EAF6F1;stroke:#1E9E7A;stroke-width:2.5}
+    .bt{font-size:19px;font-weight:800;fill:#1F2A44}
+    .bd{font-size:15.5px;fill:#5B6478}
+    .k{font-size:15px;font-weight:700;fill:#3B6FD8}
+    .ev{font-size:16px;font-weight:700;fill:#1F2A44}
+    .src{font-size:13.5px;fill:#8A93A6}
+    .cond{font-size:14.5px;font-weight:800;fill:#E08A2E}
+    .state{font-size:18px;font-weight:800;fill:#FFFFFF}
+  </style>
+</defs>
+<rect width="1600" height="900" fill="#F4F3EE"/>
+
+<text x="64" y="72" class="crumb">Belladorn  /  퀘스트 시스템</text>
+<text x="64" y="128" class="h1">조건을 조합해 퀘스트를 만들고, 게임 이벤트가 진행도를 올립니다</text>
+<text x="64" y="166" class="sub">QuestData · QuestCondition (ScriptableObject) · QuestManager · PlayerQuestProgress</text>
+
+<!-- ===== Panel 1: QuestData ===== -->
+<rect x="48" y="200" width="430" height="652" rx="20" class="panel"/>
+<text x="80" y="245" class="ptitle">QuestData (ScriptableObject)</text>
+<text x="80" y="273" class="pnote">퀘스트 하나 = 에셋 하나, 코드 수정 없이 추가</text>
+
+<rect x="76" y="296" width="374" height="70" rx="12" class="row"/>
+<text x="96" y="324" class="k">기본 정보</text>
+<text x="96" y="350" class="bd">ID · 제목 · 목표 · 유형 (Main · Side · Event …)</text>
+
+<rect x="76" y="378" width="374" height="226" rx="12" class="blue"/>
+<text x="96" y="406" class="k">conditions : List&lt;QuestCondition&gt;</text>
+<text x="96" y="432" class="bd">조건 SO를 여러 개 섞어서 구성</text>
+<g transform="translate(96 448)">
+  <rect width="160" height="30" rx="15" fill="#FFFFFF" stroke="#3B6FD8"/><text x="80" y="20" class="cond" text-anchor="middle" style="fill:#3B6FD8">KillEnemy</text>
+  <rect x="174" width="160" height="30" rx="15" fill="#FFFFFF" stroke="#3B6FD8"/><text x="254" y="20" class="cond" text-anchor="middle" style="fill:#3B6FD8">CollectItem</text>
+  <rect y="40" width="160" height="30" rx="15" fill="#FFFFFF" stroke="#3B6FD8"/><text x="80" y="60" class="cond" text-anchor="middle" style="fill:#3B6FD8">UseItem</text>
+  <rect x="174" y="40" width="160" height="30" rx="15" fill="#FFFFFF" stroke="#3B6FD8"/><text x="254" y="60" class="cond" text-anchor="middle" style="fill:#3B6FD8">TalkToNPC</text>
+  <rect y="80" width="160" height="30" rx="15" fill="#FFFFFF" stroke="#3B6FD8"/><text x="80" y="100" class="cond" text-anchor="middle" style="fill:#3B6FD8">ReachArea</text>
+</g>
+<text x="96" y="584" class="bd">각 조건이 IsMet()으로 달성 여부를 스스로 판단</text>
+
+<rect x="76" y="616" width="374" height="70" rx="12" class="row"/>
+<text x="96" y="644" class="k">reward</text>
+<text x="96" y="670" class="bd">경험치 · 골드 · 아이템 (수량)</text>
+
+<rect x="76" y="698" width="374" height="70" rx="12" class="row"/>
+<text x="96" y="726" class="k">nextQuestID · startNarration</text>
+<text x="96" y="752" class="bd">연계 퀘스트 번호 · 수락 시 혼잣말 내레이션</text>
+
+<text x="76" y="806" class="pnote">이어지는 퀘스트는 Resources에서 ID로 불러와</text>
+<text x="76" y="830" class="pnote">메인 스토리를 에셋 연결만으로 구성합니다.</text>
+
+<!-- ===== Panel 2: Event sources ===== -->
+<rect x="506" y="200" width="520" height="652" rx="20" class="panel"/>
+<text x="538" y="245" class="ptitle">게임 이벤트 → UpdateCondition(type, id)</text>
+<text x="538" y="273" class="pnote">각 시스템은 "무슨 일이 일어났는지"만 알립니다</text>
+
+<g>
+  <rect x="534" y="296" width="250" height="64" rx="12" class="row"/><text x="552" y="322" class="ev">적 사망</text><text x="552" y="346" class="src">EnemyDeadState</text>
+  <line x1="786" y1="328" x2="828" y2="328" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+  <text x="838" y="334" class="cond">KillEnemy · 적 태그</text>
+
+  <rect x="534" y="372" width="250" height="64" rx="12" class="row"/><text x="552" y="398" class="ev">아이템 획득</text><text x="552" y="422" class="src">InventoryManager.AddItem</text>
+  <line x1="786" y1="404" x2="828" y2="404" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+  <text x="838" y="410" class="cond">CollectItem · 획득 수량</text>
+
+  <rect x="534" y="448" width="250" height="64" rx="12" class="row"/><text x="552" y="474" class="ev">퀵슬롯 아이템 사용</text><text x="552" y="498" class="src">QuickSlotUI.UseItem</text>
+  <line x1="786" y1="480" x2="828" y2="480" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+  <text x="838" y="486" class="cond">UseItem · 아이템 이름</text>
+
+  <rect x="534" y="524" width="250" height="64" rx="12" class="row"/><text x="552" y="550" class="ev">NPC 대화</text><text x="552" y="574" class="src">NPCInteraction</text>
+  <line x1="786" y1="556" x2="828" y2="556" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+  <text x="838" y="562" class="cond">TalkToNPC · NPC ID</text>
+
+  <rect x="534" y="600" width="250" height="64" rx="12" class="row"/><text x="552" y="626" class="ev">지정 영역 진입</text><text x="552" y="650" class="src">QuestAreaTrigger</text>
+  <line x1="786" y1="632" x2="828" y2="632" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+  <text x="838" y="638" class="cond">ReachArea · 영역 ID</text>
+</g>
+
+<rect x="534" y="690" width="464" height="92" rx="14" class="orange"/>
+<text x="554" y="720" class="bt">QuestManager.UpdateCondition</text>
+<text x="554" y="746" class="bd">진행 중인 퀘스트의 조건과 type · id를 맞춰</text>
+<text x="554" y="768" class="bd">PlayerQuestProgress의 조건별 카운트를 증가</text>
+<text x="534" y="820" class="pnote">영역 조건은 수락 시 트리거를 생성하고, 달성하면 제거</text>
+
+
+<!-- ===== Panel 3: State ===== -->
+<rect x="1054" y="200" width="498" height="652" rx="20" class="panel"/>
+<text x="1086" y="245" class="ptitle">진행 상태와 보상</text>
+<text x="1086" y="273" class="pnote">PlayerQuestProgress가 런타임 상태를 따로 보관</text>
+
+<rect x="1086" y="296" width="434" height="76" rx="14" class="blue"/>
+<text x="1106" y="326" class="bt">AcceptQuest</text>
+<text x="1106" y="352" class="bd">조건별 진행도 0 초기화 · 영역 트리거 · 내레이션</text>
+<line x1="1303" y1="374" x2="1303" y2="398" stroke="#3B6FD8" stroke-width="2.5" marker-end="url(#ab)"/>
+
+<rect x="1146" y="402" width="314" height="44" rx="22" fill="#3B6FD8"/>
+<text x="1303" y="431" class="state" text-anchor="middle">InProgress</text>
+<text x="1316" y="476" class="bd">모든 조건 IsMet()</text>
+<line x1="1303" y1="448" x2="1303" y2="494" stroke="#3B6FD8" stroke-width="2.5" marker-end="url(#ab)"/>
+
+<rect x="1146" y="498" width="314" height="44" rx="22" fill="#E08A2E"/>
+<text x="1303" y="527" class="state" text-anchor="middle">Completed</text>
+<text x="1316" y="572" class="bd">퀘스트 창에서 수령 → 보상 지급</text>
+<line x1="1303" y1="544" x2="1303" y2="590" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+
+<rect x="1146" y="594" width="314" height="44" rx="22" fill="#1E9E7A"/>
+<text x="1303" y="623" class="state" text-anchor="middle">Rewarded</text>
+<line x1="1303" y1="640" x2="1303" y2="664" stroke="#1E9E7A" stroke-width="2.5" marker-end="url(#ag)"/>
+
+<rect x="1086" y="668" width="434" height="76" rx="14" class="green"/>
+<text x="1106" y="698" class="bt">nextQuestID → 다음 퀘스트 자동 수락</text>
+<text x="1106" y="724" class="bd">경험치 · 골드 · 아이템은 각 시스템에 위임</text>
+
+<text x="1086" y="788" class="pnote">상태가 바뀔 때마다 OnQuestUpdated 이벤트로</text>
+<text x="1086" y="812" class="pnote">퀘스트 HUD · 목록 · 상세 창이 갱신됩니다.</text>
+<path d="M1000 720 H1040 V424 H1140" fill="none" stroke="#E08A2E" stroke-width="2.5" marker-end="url(#ao)"/>
+</svg>
