@@ -28,7 +28,7 @@
       <p class="cs-tagline">횃불로 어둠을 밝히며 던전을 개척하는 <b>3D 던전 탐험 액션</b>입니다. 빛의 수명과 시야가 탐색과 적의 행동에 직접 연결되며, 저는 메인 개발자로 전투 · AI · 던전 · UI와 맵 제작용 에디터 툴을 맡고 있습니다.</p>
       <div class="cs-hero-actions">
         <a class="primary" href="https://www.canva.com/d/mzu8Fvwvj8IVG7d" target="_blank" rel="noopener noreferrer">Canva 포트폴리오 <span aria-hidden="true">↗</span></a>
-        <a href="https://github.com/hjune87/Project-DP" target="_blank" rel="noopener noreferrer">GitHub 저장소 (접근 권한 필요) <span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio" target="_blank" rel="noopener noreferrer">GitHub 코드 <span aria-hidden="true">↗</span></a>
       </div>
     </div>
     <a class="button button-outline" href="#torch">구현 사례 보기 <span aria-hidden="true">↓</span></a>
@@ -86,7 +86,7 @@
         <li><strong>장르</strong> — 3D 던전 탐험 액션</li>
         <li><strong>개발 기간</strong> — 2026.06.17 – 현재 (개발 중) · 3인 팀</li>
         <li><strong>개발 환경</strong> — Unity 6 (6000.3.17f1), C#, URP</li>
-        <li><strong>저장소</strong> — 팀 비공개 저장소 (코드 링크는 접근 권한이 필요할 수 있습니다)</li>
+        <li><strong>저장소</strong> — 포트폴리오 공개본 (유료 · 외부 에셋 제외, 커밋 기록 유지)</li>
       </ul>
     </div>
   </div>
@@ -134,8 +134,7 @@
       </ul></div>
     </div>
     <div class="cs-flow"><span>벽 면에 설치</span><i>→</i><span>수명 · 밝기 감쇠</span><i>→</i><span>적의 횃불 공격 (−60s)</span><i>→</i><span>빛이 사라지는 탐색</span></div>
-    <div class="cs-src private"><span>관련 코드</span><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/Map/TorchInstance.cs" target="_blank" rel="noopener noreferrer">TorchInstance.cs</a><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/Player/State/PlaceTorchState_Player.cs" target="_blank" rel="noopener noreferrer">PlaceTorchState_Player.cs</a><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/UI/Components/TorchGauge.cs" target="_blank" rel="noopener noreferrer">TorchGauge.cs</a></div>
-    <p class="cs-note">팀 비공개 저장소라 접근 권한이 필요할 수 있습니다.</p>
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/Map/TorchInstance.cs" target="_blank" rel="noopener noreferrer">TorchInstance.cs</a><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/Player/State/PlaceTorchState_Player.cs" target="_blank" rel="noopener noreferrer">PlaceTorchState_Player.cs</a><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/UI/Components/TorchGauge.cs" target="_blank" rel="noopener noreferrer">TorchGauge.cs</a></div>
   </article>
 
   <!-- ================= 02 ENEMY ================= -->
@@ -158,7 +157,7 @@
     </div>
     <div class="cs-callout"><p><strong>횃불 사냥</strong> — 적은 시야 안에 들어온 횃불 중 앞 바닥 셀에 설 수 있는 가장 가까운 횃불을 목표로 삼아 공격합니다. 3초 동안 다가가지 못하면 포기하고 그 횃불을 10초 동안 무시해, 닿을 수 없는 횃불 앞에서 맴도는 상황을 막았습니다. 횃불을 노리던 중에도 플레이어를 발견하면 대상을 플레이어로 바꿉니다.</p></div>
     <div class="cs-flow"><span>LocationGrid</span><i>→</i><span>A* 경로 탐색</span><i>→</i><span>FOV · 순찰</span><i>→</i><span>격자 기반 이동</span></div>
-    <div class="cs-src private"><span>관련 코드</span><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/World/Grid/LocationGrid.cs" target="_blank" rel="noopener noreferrer">LocationGrid.cs</a><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/Actor/GridMover.cs" target="_blank" rel="noopener noreferrer">GridMover.cs</a><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/Actor/GridSearch.cs" target="_blank" rel="noopener noreferrer">GridSearch.cs</a></div>
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/World/Grid/LocationGrid.cs" target="_blank" rel="noopener noreferrer">LocationGrid.cs</a><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/Actor/GridMover.cs" target="_blank" rel="noopener noreferrer">GridMover.cs</a><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/Actor/GridSearch.cs" target="_blank" rel="noopener noreferrer">GridSearch.cs</a></div>
   </article>
 
   <!-- ================= 03 BUILDER ================= -->
@@ -180,7 +179,7 @@
       </ul></div>
     </div>
     <div class="cs-flow"><span>타일 팔레트</span><i>→</i><span>에디터 배치</span><i>→</i><span>맵 굽기</span><i>→</i><span>런타임 맵 데이터</span></div>
-    <div class="cs-src private"><span>관련 코드</span><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Editor/MapBuilderEditor.cs" target="_blank" rel="noopener noreferrer">MapBuilderEditor.cs</a><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/Map/Builder/MapBuilder.cs" target="_blank" rel="noopener noreferrer">MapBuilder.cs</a></div>
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Editor/MapBuilderEditor.cs" target="_blank" rel="noopener noreferrer">MapBuilderEditor.cs</a><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/Map/Builder/MapBuilder.cs" target="_blank" rel="noopener noreferrer">MapBuilder.cs</a></div>
   </article>
 
   <!-- ================= 04 MINIMAP ================= -->
@@ -198,7 +197,7 @@
     </div>
     <div class="cs-callout"><p><strong>야외 미니맵</strong> — 필드처럼 넓은 야외 맵은 위에서 찍은 지형을 그대로 쓰면 텍스처 무늬가 지저분하게 보입니다. 그래서 Kuwahara 필터로 자잘한 무늬는 뭉개고 경계는 살린 뒤, 색 보정 · 높이 음영 · 외곽선을 더해 그림 같은 지도 이미지로 가공했습니다.</p></div>
     <div class="cs-flow"><span>광원 · 시야 변화</span><i>→</i><span>탐색 상태 갱신</span><i>→</i><span>변경 범위만 재칠하기</span><i>→</i><span>미니맵 출력</span></div>
-    <div class="cs-src private"><span>관련 코드</span><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/Core/MinimapVisionMap.cs" target="_blank" rel="noopener noreferrer">MinimapVisionMap.cs</a><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/Core/MinimapImageProcessing.cs" target="_blank" rel="noopener noreferrer">MinimapImageProcessing.cs</a><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/Core/MinimapManager.cs" target="_blank" rel="noopener noreferrer">MinimapManager.cs</a><a href="https://github.com/hjune87/Project-DP/blob/main/Project%20DP/Assets/Scripts/TorchFOV.cs" target="_blank" rel="noopener noreferrer">TorchFOV.cs</a></div>
+    <div class="cs-src"><span>관련 코드</span><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/Core/MinimapVisionMap.cs" target="_blank" rel="noopener noreferrer">MinimapVisionMap.cs</a><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/Core/MinimapImageProcessing.cs" target="_blank" rel="noopener noreferrer">MinimapImageProcessing.cs</a><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/Core/MinimapManager.cs" target="_blank" rel="noopener noreferrer">MinimapManager.cs</a><a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio/blob/main/Project%20DP/Assets/Scripts/TorchFOV.cs" target="_blank" rel="noopener noreferrer">TorchFOV.cs</a></div>
   </article>
 </section>
 
@@ -209,7 +208,7 @@
   <p class="cs-text" style="margin-top:12px">개발 중인 프로젝트라 영상 대신 원본 포트폴리오에 실제 구현 화면을 정리했습니다.</p>
   <div class="cs-resources">
     <a href="https://www.canva.com/d/mzu8Fvwvj8IVG7d" target="_blank" rel="noopener noreferrer"><small>PORTFOLIO</small><strong>Canva 포트폴리오 ↗</strong><span>실제 구현 화면이 담긴 원본 포트폴리오</span></a>
-    <a href="https://github.com/hjune87/Project-DP" target="_blank" rel="noopener noreferrer"><small>SOURCE CODE</small><strong>GitHub 저장소 ↗</strong><span>팀 비공개 저장소 · 접근 권한이 필요할 수 있습니다</span></a>
+    <a href="https://github.com/chlwnsdud2025/Dungeon-Pioneer-Portfolio" target="_blank" rel="noopener noreferrer"><small>SOURCE CODE</small><strong>GitHub 저장소 ↗</strong><span>포트폴리오 공개본 · 유료 에셋 제외</span></a>
   </div>
 </section>
 
