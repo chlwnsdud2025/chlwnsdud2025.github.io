@@ -64,14 +64,6 @@
   <p class="cs-lead">뱀서라이크 장르의 재미는 화면을 가득 채운 적을 한꺼번에 쓸어버리는 데서 나옵니다. 하지만 3D에서 적이 수백 마리를 넘어가면 개별 <code class="k">Update</code>, 생성 · 파괴, Animator, 적끼리의 겹침 처리 비용이 한꺼번에 프레임을 끌어내립니다.</p>
   <p class="cs-lead">4인 팀으로 4주 동안 개발하면서 저는 Enemy · Boss · 맵 · 인게임 흐름을 맡았습니다. <strong>Profiler로 병목을 찾고, 같은 조건에서 전후를 비교하며</strong> 단계적으로 최적화했고, 웨이브부터 최종 보스까지 이어지는 런 구조를 팀원이 코드 수정 없이 조정할 수 있는 데이터로 설계했습니다.</p>
 
-  <div class="cs-stats">
-    <div class="cs-stat"><b>≈1,000<small>마리</small></b><span>측정 기준 동시 활성 적 수</span></div>
-    <div class="cs-stat"><b>−97.8<small>%</small></b><span>적 분리 계산 187.07 → 4.06ms (Grid 공간 분할)</span></div>
-    <div class="cs-stat"><b>−97.4<small>%</small></b><span>Animator 갱신 2.67 → 0.07ms (VAT + GPU Instancing)</span></div>
-    <div class="cs-stat"><b>748<small>→30</small></b><span>적 748 인스턴스를 30 드로우로</span></div>
-    <div class="cs-stat"><b>6 + 9<small>종</small></b><span>일반 Enemy 6종 · 보스 9종</span></div>
-  </div>
-
   <div class="cs-role">
     <div>
       <h3>내가 맡은 일</h3>
